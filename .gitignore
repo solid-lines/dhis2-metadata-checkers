@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# LiEclipse stuff
+.project
+.pydevproject
+
+credentials.ini
