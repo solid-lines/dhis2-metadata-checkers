@@ -8,7 +8,8 @@ from datetime import date
 import logging
 import os
 
-METADATA_RESOURCE = "options"
+PARENT_RESOURCE = "options"
+CHILD_RESOURCE = "optionSet" # Watch out singular and plural.
 
 ##### Obtain credentials ####
 credentials = {}
@@ -50,20 +51,20 @@ logger.addHandler(fh)
 
 ################################################################################
 
-def get_resources_from_online(resource_name, country_prefix=None):
+def get_resources_from_online(parent_resource, child_resource, country_prefix=None):
     page = 0
-    resources = { resource_name : [] }
+    resources = { parent_resource : [] }
     data_to_query = True
     while data_to_query:
         page += 1
-        url_resource = SERVER_URL + resource_name + ".json?fields=id,name,optionSet&pageSize=" + str(PAGESIZE) + "&format=json&order=created:ASC&skipMeta=true&page=" + str(page)
+        url_resource = SERVER_URL + parent_resource + ".json?fields=id,name,"+child_resource+"&pageSize=" + str(PAGESIZE) + "&format=json&order=created:ASC&skipMeta=true&page=" + str(page)
         if country_prefix is not None:
             url_resource = url_resource + "&filter=name:like:"+country_prefix
-        logging.debug(url_resource) 
+        logging.debug(url_resource)
         response = requests.get(url_resource, auth=HTTPBasicAuth(USERNAME, PASSWORD))
 
         if response.ok:
-            resources[resource_name].extend(response.json()[resource_name])
+            resources[parent_resource].extend(response.json()[parent_resource])
             if ("nextPage" not in response.json()["pager"]):
                 data_to_query = False
         else:
@@ -77,11 +78,12 @@ def get_resources_from_online(resource_name, country_prefix=None):
 
 if __name__ == "__main__":
     #retrieve all metadata_resources
-    metadata_resources = get_resources_from_online(METADATA_RESOURCE)
-    
-    #check if all metadata_resources are associated to an optionSet
-    for option in metadata_resources[METADATA_RESOURCE]:
+    metadata_resources = get_resources_from_online(parent_resource=PARENT_RESOURCE, child_resource=CHILD_RESOURCE)
+
+    #check condition
+    #check if all options are associated to an optionSet
+    for option in metadata_resources[PARENT_RESOURCE]:
         if (not "optionSet" in option):
-            metadata_url = SERVER_URL+METADATA_RESOURCE+"/"+option["id"]
+            metadata_url = SERVER_URL+PARENT_RESOURCE+"/"+option["id"]
             message = "The option "+ str(option["name"]) + "' (" + str(option["id"]) + ") is NOT associated to an optionSet. See "+metadata_url
             logging.error(message)
