@@ -18,3 +18,6 @@ This script checks if an option is NOT associated with an optionSet (i.e. search
 
 # check-programs-without-programStages.py
 This script checks if a program (event/tracker) has at least one programStage (i.e. search for programs without programStages).
+
+# check-programIndicators-without-expression.py
+This script checks if a program indicator has a expression.
