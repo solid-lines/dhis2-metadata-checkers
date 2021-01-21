@@ -53,20 +53,20 @@ logger.addHandler(fh)
 ################################################################################
     
 
-def get_resources(resource_name, country_prefix=None):
+def get_resources(parent_resource, country_prefix=None):
     page = 0
-    resources = { resource_name : [] }
+    resources = { parent_resource : [] }
     data_to_query = True
     while data_to_query:
         page += 1
-        url_resource = SERVER_URL + resource_name + ".json?filter=closedDate:!null&fields=id,name,openingDate,closedDate&pageSize=" + str(PAGESIZE) + "&format=json&order=created:ASC&skipMeta=true&page=" + str(page)
+        url_resource = SERVER_URL + parent_resource + ".json?filter=closedDate:!null&fields=id,name,"+OPENING_DATE+",closedDate&pageSize=" + str(PAGESIZE) + "&format=json&order=created:ASC&skipMeta=true&page=" + str(page)
         if country_prefix is not None:
             url_resource = url_resource + "&filter=name:like:"+country_prefix
         logging.debug(url_resource) 
         response = requests.get(url_resource, auth=HTTPBasicAuth(USERNAME, PASSWORD))
 
         if response.ok:
-            resources[resource_name].extend(response.json()[resource_name])
+            resources[parent_resource].extend(response.json()[parent_resource])
             if ("nextPage" not in response.json()["pager"]):
                 data_to_query = False
         else:
@@ -81,19 +81,17 @@ def get_resources(resource_name, country_prefix=None):
 
 if __name__ == "__main__":
     #retrieve all metadata_resources
-    metadata_resources = get_resources(resource_name=PARENT_RESOURCE)
+    metadata_resources = get_resources(parent_resource=PARENT_RESOURCE)
     
     #check condition
     #check if each organization unit has coherent dates    
     for orgUnit in metadata_resources[PARENT_RESOURCE]:
         closedDate = datetime.strptime(orgUnit[CLOSED_DATE],"%Y-%m-%dT%H:%M:%S.%f")
         openingDate = datetime.strptime(orgUnit[OPENING_DATE],"%Y-%m-%dT%H:%M:%S.%f")
-        
-        
+
+        metadata_url = SERVER_URL+PARENT_RESOURCE+"/"+orgUnit["id"]
         if closedDate > datetime.now():
-            print("The organisationUnit "+ str(orgUnit["name"]) + "' (" + str(orgUnit["id"]) + ") has a closedDate in the future (later than today): "+str(closedDate))
-            logging.error("The organisationUnit "+ str(orgUnit["name"]) + "' (" + str(orgUnit["id"]) + ") has a closedDate in the future (later than today): "+str(closedDate))
+            logging.error("The organisationUnit "+ str(orgUnit["name"]) + "' (" + str(orgUnit["id"]) + ") has a closedDate in the future (later than today): "+str(closedDate)+". See "+metadata_url)
 
         if openingDate > closedDate:
-            print("The organisationUnit "+ str(orgUnit["name"]) + "' (" + str(orgUnit["id"]) + ") has the opening date ("+str(openingDate)+") later than the closed date: ("+str(closedDate)+")")
-            logging.error("The organisationUnit "+ str(orgUnit["name"]) + "' (" + str(orgUnit["id"]) + ") has the opening date ("+str(openingDate)+") later than the closed date: ("+str(closedDate)+")")
+            logging.error("The organisationUnit "+ str(orgUnit["name"]) + "' (" + str(orgUnit["id"]) + ") has the opening date ("+str(openingDate)+") later than the closed date: ("+str(closedDate)+"). See "+metadata_url)
