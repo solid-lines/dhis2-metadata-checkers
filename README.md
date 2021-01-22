@@ -30,3 +30,7 @@ This script checks if a programStageSection is NOT associated with a programStag
 
 # check-optionSets-options-and-order.py
 This script checks if each optionSet has at least 2 options associated AND checks if the sortOrder of the options is valid (i.e. starts at 1  and the latest sortOrder value is the size of the list of options)
+
+# check-programsWithoutRegistration-with-TE-type.py
+This script checks if a program without registration (event program) is associated (unexpectedly) to a Tracked Entity Type.
+
