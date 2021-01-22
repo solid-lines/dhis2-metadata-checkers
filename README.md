@@ -24,3 +24,6 @@ This script checks if a program indicator has a expression.
 
 # check-organisationUnitOpeningDateAndClosedDate.py
 This script checks if an organization unit has coherent opening and closed dates (i.e. search for closedDate in the future or openingDate later than closedDate)
+
+# check-programStageSections-without-programStage.py
+This script checks if a programStageSection is NOT associated with a programStage (i.e. search for orphan programStageSections).
