@@ -82,8 +82,8 @@ if __name__ == "__main__":
 
     #check condition
     #check if all options are associated to an optionSet
-    for option in metadata_resources[PARENT_RESOURCE]:
-        if (not "optionSet" in option):
-            metadata_url = SERVER_URL+PARENT_RESOURCE+"/"+option["id"]
-            message = "The option "+ str(option["name"]) + "' (" + str(option["id"]) + ") is NOT associated to an optionSet. See "+metadata_url
+    for resource in metadata_resources[PARENT_RESOURCE]:
+        if (not CHILD_RESOURCE in resource):
+            metadata_url = SERVER_URL+PARENT_RESOURCE+"/"+resource["id"]
+            message = "The option "+ str(resource["name"]) + "' (" + str(resource["id"]) + ") is NOT associated to an optionSet. See "+metadata_url
             logging.error(message)

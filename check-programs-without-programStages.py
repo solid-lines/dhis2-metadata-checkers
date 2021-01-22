@@ -84,7 +84,7 @@ if __name__ == "__main__":
     #check condition
     #check if each program has at least one programStage    
     for program in metadata_resources[PARENT_RESOURCE]:
-        if not (len(program["programStages"])):
+        if not (len(program[CHILD_RESOURCE])):
             metadata_url = SERVER_URL+PARENT_RESOURCE+"/"+program["id"]
             message = "The program "+ str(program["name"]) + "' (" + str(program["id"]) + ") has NOT stages. See "+metadata_url
             logging.error(message)
