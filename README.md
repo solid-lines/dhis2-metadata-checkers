@@ -34,3 +34,33 @@ This script checks if each optionSet has at least 2 options associated AND check
 # check-programsWithoutRegistration-with-TE-type.py
 This script checks if a program without registration (event program) is associated (unexpectedly) to a Tracked Entity Type.
 
+# check-size-groups-and-sets.py
+This script checks the number of elements that are part of a group or a set, raising an error if the number is unexpected (like groups conformed by one element).
+
+Groups and Sets that they are expected to be conformed by more than one element:
+
+* programIndicatorGroups: programIndicators
+* dataElementGroups: dataElements
+* programTrackedEntityAttributeGroups: programTrackedEntityAttributes
+* indicatorGroups: indicators
+* validationRuleGroups: validationRules
+* predictorGroups: predictors
+* categoryOptionGroups: categoryOptions
+* organisationUnitGroups: organisationUnits
+* userGroups: users
+* optionGroups: options
+* categories: categoryOptions
+* indicatorGroupSets: indicatorGroups
+* organisationUnitGroupSets: organisationUnitGroups
+* optionSets: options
+* legendSets: legends
+* dataElementGroupSets: dataElementGroups
+* categoryOptionGroupSets: categoryOptionGroups
+* dataSets: dataSetElements
+* colorSets: colors
+* optionGroupSets: optionGroups
+
+
+Resources that are expected to be linked with only one 'otherResource':
+
+* dataElements: dataSetElements
