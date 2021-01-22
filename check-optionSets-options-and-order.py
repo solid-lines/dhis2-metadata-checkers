@@ -8,8 +8,7 @@ from datetime import date
 import logging
 import os
 
-PARENT_RESOURCE = "programStageSections"
-CHILD_RESOURCE = "programStage" # Watch out singular and plural.
+PARENT_RESOURCE = "optionSets"
 
 ##### Obtain credentials ####
 credentials = {}
@@ -51,13 +50,14 @@ logger.addHandler(fh)
 
 ################################################################################
 
-def get_resources_from_online(parent_resource, child_resource, country_prefix=None):
+
+def get_resources_from_online(parent_resource, country_prefix=None):
     page = 0
     resources = { parent_resource : [] }
     data_to_query = True
     while data_to_query:
         page += 1
-        url_resource = SERVER_URL + parent_resource + ".json?fields=id,name,"+child_resource+"&pageSize=" + str(PAGESIZE) + "&format=json&order=created:ASC&skipMeta=true&page=" + str(page)
+        url_resource = SERVER_URL + parent_resource + ".json?fields=id,name,options[sortOrder]&pageSize=" + str(PAGESIZE) + "&format=json&order=created:ASC&skipMeta=true&page=" + str(page)
         if country_prefix is not None:
             url_resource = url_resource + "&filter=name:like:"+country_prefix
         logging.debug(url_resource)
@@ -78,12 +78,25 @@ def get_resources_from_online(parent_resource, child_resource, country_prefix=No
 
 if __name__ == "__main__":
     #retrieve all metadata_resources
-    metadata_resources = get_resources_from_online(parent_resource=PARENT_RESOURCE, child_resource=CHILD_RESOURCE)
+    metadata_resources = get_resources_from_online(parent_resource=PARENT_RESOURCE)
 
-    #check condition
-    #check if all programStageSections are associated to a programStage
-    for resource in metadata_resources[PARENT_RESOURCE]:
-        if (not CHILD_RESOURCE in resource):
-            metadata_url = SERVER_URL+PARENT_RESOURCE+"/"+resource["id"]
-            message = "The programStageSection "+ str(resource["name"]) + "' (" + str(resource["id"]) + ") is NOT associated to a programStage. See "+metadata_url
+
+    for optionSet in metadata_resources[PARENT_RESOURCE]:
+        size = len(optionSet["options"]);
+        sortOrders = [x["sortOrder"] for x in optionSet["options"]]
+        sortOrders = sorted(sortOrders)
+        metadata_url = SERVER_URL+PARENT_RESOURCE+"/"+optionSet["id"]+"?fields=*,options[*]"
+
+        #check condition
+        #check if each optionSet has at least 2 options
+        if (size <=1):
+            message = "The optionSet "+ str(optionSet["name"]) + "' (" + str(optionSet["id"]) + ") has one or less options. See "+metadata_url
             logging.error(message)
+        else:
+            #check condition
+            #check if the sortOrder of the options is valid (starts at 1 + latest has the value of the size of the optionList).
+            if (size == len(sortOrders)) and (sortOrders[0] == 1) and (sortOrders[size - 1] == size):
+                pass # Everything is OK
+            else:
+                message = "The optionSet "+ str(optionSet["name"]) + "' (" + str(optionSet["id"]) + ") has errors in the sortOrder. See "+metadata_url
+                logging.error(message)
