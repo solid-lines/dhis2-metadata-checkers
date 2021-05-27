@@ -58,7 +58,7 @@ def get_resources_from_online(parent_resource, child_resource, country_prefix=No
     data_to_query = True
     while data_to_query:
         page += 1
-        url_resource = SERVER_URL + parent_resource + ".json?fields=id,name,"+child_resource+"&pageSize=" + str(PAGESIZE) + "&format=json&order=created:ASC&skipMeta=true&page=" + str(page)
+        url_resource = SERVER_URL + parent_resource + ".json?fields=id,name&filter="+child_resource+":null&pageSize=" + str(PAGESIZE) + "&format=json&order=created:ASC&skipMeta=true&page=" + str(page)
         if country_prefix is not None:
             url_resource = url_resource + "&filter=name:like:"+country_prefix
         logging.debug(url_resource) 
