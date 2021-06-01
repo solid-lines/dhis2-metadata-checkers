@@ -34,6 +34,9 @@ This script checks if each optionSet has at least 2 options associated AND check
 # check-uniqueness-options-in-optionSet.py
 This script checks that all names and codes of the options that belongs to an optionSet are unique.
 
+# check-uniqueness-orgUnit-orgUnitGroupSet.py
+This script checks that an organisation unit can be member of exactly one of the groups in a group set.
+
 # check-programsWithoutRegistration-with-TE-type.py
 This script checks if a program without registration (event program) is associated (unexpectedly) to a Tracked Entity Type.
 
