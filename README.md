@@ -31,6 +31,9 @@ This script checks if a programStageSection is NOT associated with a programStag
 # check-optionSets-options-and-order.py
 This script checks if each optionSet has at least 2 options associated AND checks if the sortOrder of the options is valid (i.e. starts at 1  and the latest sortOrder value is the size of the list of options)
 
+# check_options_in_filters.py
+This script checks if the options present in the filter of eventCharts and eventReports are valid (comparing them with the current options of the optionSets related to the dataelements referenced in the filter).
+
 # check-uniqueness-options-in-optionSet.py
 This script checks that all names and codes of the options that belongs to an optionSet are unique.
 
