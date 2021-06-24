@@ -83,7 +83,7 @@ if __name__ == "__main__":
     #check condition
     #check if all programIndicators has a expression
     for resource in metadata_resources[PARENT_RESOURCE]:
-       if CHILD_RESOURCE not in resource:
+        if CHILD_RESOURCE not in resource:
             metadata_url = SERVER_URL+PARENT_RESOURCE+"/"+resource["id"]
             message = "The programIndicator "+ str(resource["name"]) + "' (" + str(resource["id"]) + ") has not a expression. See "+metadata_url
             logging.error(message)

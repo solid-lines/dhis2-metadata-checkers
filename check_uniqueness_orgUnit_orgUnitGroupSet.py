@@ -7,7 +7,6 @@ from requests.auth import HTTPBasicAuth
 from datetime import date
 import logging
 import os
-from collections import Counter
 
 ##### Obtain credentials ####
 credentials = {}
