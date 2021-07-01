@@ -28,6 +28,9 @@ This script checks if an organization unit has coherent opening and closed dates
 # check_programStageSections_without_programStage.py
 This script checks if a programStageSection is NOT associated with a programStage (i.e. search for orphan programStageSections).
 
+# check_programRules_without_programRuleActions.py
+This script checks if a program rule has at least one program rule action.
+
 # check_optionSets_options_and_order.py
 This script checks if each optionSet has at least 2 options associated AND checks if the sortOrder of the options is valid (i.e. starts at 1  and the latest sortOrder value is the size of the list of options)
 
