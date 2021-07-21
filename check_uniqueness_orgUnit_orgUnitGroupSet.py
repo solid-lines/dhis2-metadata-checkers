@@ -30,7 +30,7 @@ check_name = os.path.basename(__file__).replace(".py","")
 FILENAME_LOG = today + "-"+SERVER_NAME+"-"+check_name+".log"
 
 logger = logging.getLogger()
-logger.setLevel(logging.ERROR)
+logger.setLevel(logging.DEBUG)
 # create file handler which logs error messages
 fh = logging.FileHandler(FILENAME_LOG, encoding='utf-8')
 fh.setLevel(logging.ERROR)
