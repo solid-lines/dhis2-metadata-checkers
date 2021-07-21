@@ -112,7 +112,7 @@ if __name__ == "__main__":
             #check condition
             if (group[v] <= 1):
                 metadata_url = SERVER_URL+k+"/"+group["id"]
-                message = "The "+ k +" "+ str(group["name"]) + "' (" + str(group["id"]) + ") has not the expected number of "+v + " (size obtained="+str(group[v])+"). See "+metadata_url
+                message = "The "+ k +" '"+ str(group["name"]) + "' (" + str(group["id"]) + ") has not the expected number of "+v + " (size obtained="+str(group[v])+"). See "+metadata_url
                 logging.error(message)
      
     
