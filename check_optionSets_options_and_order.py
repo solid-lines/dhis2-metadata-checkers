@@ -90,7 +90,7 @@ if __name__ == "__main__":
         #check condition
         #check if each optionSet has at least 2 options
         if (size <=1):
-            message = "The optionSet "+ str(optionSet["name"]) + "' (" + str(optionSet["id"]) + ") has one or less options. See "+metadata_url
+            message = "The optionSet '"+ str(optionSet["name"]) + "' (" + str(optionSet["id"]) + ") has one or less options. See "+metadata_url
             logging.error(message)
         else:
             #check condition
@@ -98,5 +98,5 @@ if __name__ == "__main__":
             if (size == len(sortOrders)) and (sortOrders[0] == 1) and (sortOrders[size - 1] == size):
                 pass # Everything is OK
             else:
-                message = "The optionSet "+ str(optionSet["name"]) + "' (" + str(optionSet["id"]) + ") has errors in the sortOrder. See "+metadata_url
+                message = "The optionSet '"+ str(optionSet["name"]) + "' (" + str(optionSet["id"]) + ") has errors in the sortOrder. See "+metadata_url
                 logging.error(message)
