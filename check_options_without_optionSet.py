@@ -85,5 +85,5 @@ if __name__ == "__main__":
     for resource in metadata_resources[PARENT_RESOURCE]:
         if (not CHILD_RESOURCE in resource):
             metadata_url = SERVER_URL+PARENT_RESOURCE+"/"+resource["id"]
-            message = "The option "+ str(resource["name"]) + "' (" + str(resource["id"]) + ") is NOT associated to an optionSet. See "+metadata_url
+            message = "The option '"+ str(resource["name"]) + "' (" + str(resource["id"]) + ") is NOT associated to an optionSet. See "+metadata_url
             logging.error(message)
