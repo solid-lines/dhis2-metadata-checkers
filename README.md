@@ -43,6 +43,9 @@ This script checks that all names and codes of the options that belongs to an op
 # check_uniqueness_orgUnit_orgUnitGroupSet.py
 This script checks that an organisation unit can be member of exactly one of the groups in a group set.
 
+# check_uniqueness_name_prv.py
+This script checks that all names of program rule variables related to a particular program are unique.
+
 # check_programsWithoutRegistration_with_TE_type.py
 This script checks if a program without registration (event program) is associated (unexpectedly) to a Tracked Entity Type.
 
