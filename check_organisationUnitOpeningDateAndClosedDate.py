@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
         metadata_url = SERVER_URL+PARENT_RESOURCE+"/"+orgUnit["id"]
         if closedDate > datetime.now():
-            logging.error("The organisationUnit "+ str(orgUnit["name"]) + "' (" + str(orgUnit["id"]) + ") has a closedDate in the future (later than today): "+str(closedDate)+". See "+metadata_url)
+            logging.error("The organisationUnit '"+ str(orgUnit["name"]) + "' (" + str(orgUnit["id"]) + ") has a closedDate in the future (later than today): "+str(closedDate)+". See "+metadata_url)
 
         if openingDate > closedDate:
-            logging.error("The organisationUnit "+ str(orgUnit["name"]) + "' (" + str(orgUnit["id"]) + ") has the opening date ("+str(openingDate)+") later than the closed date: ("+str(closedDate)+"). See "+metadata_url)
+            logging.error("The organisationUnit '"+ str(orgUnit["name"]) + "' (" + str(orgUnit["id"]) + ") has the opening date ("+str(openingDate)+") later than the closed date: ("+str(closedDate)+"). See "+metadata_url)
