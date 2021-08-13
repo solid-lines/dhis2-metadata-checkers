@@ -55,6 +55,9 @@ This script checks the number of elements that are part of a group or a set, rai
 # check_link_programRuleAction_de.py
 This script checks if the data element associated to a program rule action belongs to the program that the program rule is associated to.
 
+# check_link_programRuleAction_tea.py
+This script checks if the tracked entity attribute associated to a program rule action belongs to the program (or the tracked entity type) that the program rule is associated to.
+
 Groups and Sets that they are expected to be conformed by more than one element:
 
 * programIndicatorGroups: programIndicators
