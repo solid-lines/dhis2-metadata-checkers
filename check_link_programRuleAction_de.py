@@ -12,7 +12,7 @@ import os
 credentials = {}
 parser = ConfigParser()
 parser.read("credentials.ini")
-params = parser.items("credentials_dev") # CHANGE select here your credentials
+params = parser.items("credentials_clone") # CHANGE select here your credentials
 
 for param in params:
     credentials[param[0]] = param[1]
@@ -85,7 +85,6 @@ if __name__ == "__main__":
 
 
     PROGRAMS = "programs"
-    #retrieve all metadata_resources
     metadata_resources = get_resources_from_online(parent_resource=PROGRAMS, fields=["name","id","programStages[programStageDataElements[dataElement[id,name]]]"], filter=None)
     
     programs = {}
