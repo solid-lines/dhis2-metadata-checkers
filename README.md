@@ -52,6 +52,9 @@ This script checks if a program without registration (event program) is associat
 # check_size_groups_and_sets.py
 This script checks the number of elements that are part of a group or a set, raising an error if the number is unexpected (like groups conformed by one element).
 
+# check_link_programRuleAction_de.py
+This script checks if the data element associated to a program rule action belongs to the program that the program rule is associated to.
+
 Groups and Sets that they are expected to be conformed by more than one element:
 
 * programIndicatorGroups: programIndicators
