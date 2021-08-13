@@ -12,7 +12,7 @@ import os
 credentials = {}
 parser = ConfigParser()
 parser.read("credentials.ini")
-params = parser.items("play_2_33_8") # CHANGE select here your credentials
+params = parser.items("credentials_clone") # CHANGE select here your credentials
 
 for param in params:
     credentials[param[0]] = param[1]
