@@ -58,6 +58,9 @@ This script checks if the data element associated to a program rule action belon
 # check_link_programRuleAction_tea.py
 This script checks if the tracked entity attribute associated to a program rule action belongs to the program (or the tracked entity type) that the program rule is associated to.
 
+# check_uniqueness_name.py
+This script checks if more than one resource of a particular type has the same name (configurable as name, shortname, formname) for the same locale.  
+
 Groups and Sets that they are expected to be conformed by more than one element:
 
 * programIndicatorGroups: programIndicators
