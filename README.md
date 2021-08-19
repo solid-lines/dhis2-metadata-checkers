@@ -67,6 +67,10 @@ This script checks if the data element associated to a program rule variable exi
 # check_link_programRuleVariable_de.py
 This script checks if the tracked entity attribute associated to a program rule variable exists and belongs to the program (or the tracked entity type) that the program rule is associated to.
 
+# check_de_ps_pss.py
+This script checks if the data elements associated to a program stage are used in the program stage instance.
+
+
 Groups and Sets that they are expected to be conformed by more than one element:
 
 * programIndicatorGroups: programIndicators
