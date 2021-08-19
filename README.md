@@ -70,6 +70,9 @@ This script checks if the tracked entity attribute associated to a program rule 
 # check_de_ps_pss.py
 This script checks if the data elements associated to a program stage are used in the program stage instance.
 
+# check_programStages_without_program
+This script checks if a programStage is NOT associated with a program (i.e. search for orphan programStage).
+
 
 Groups and Sets that they are expected to be conformed by more than one element:
 
