@@ -33,7 +33,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 # create file handler which logs error messages
 fh = logging.FileHandler(FILENAME_LOG, encoding='utf-8')
-fh.setLevel(logging.ERROR)
+fh.setLevel(logging.WARN)
 # create console handler which logs even debug messages
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
