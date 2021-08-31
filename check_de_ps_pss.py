@@ -1,64 +1,22 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from configparser import ConfigParser
 import requests
 from requests.auth import HTTPBasicAuth
-from datetime import date
-import logging
+import utils
 import os
 
-##### Obtain credentials ####
-credentials = {}
-parser = ConfigParser()
-parser.read("credentials.ini")
-params = parser.items("credentials_clone") # CHANGE select here your credentials
 
-for param in params:
-    credentials[param[0]] = param[1]
-
-SERVER_URL = credentials["server"]
-SERVER_NAME = credentials["server_name"]
-USERNAME = credentials["user"]
-PASSWORD = credentials["password"]
-PAGESIZE = credentials["page_size"]
-
-
-##### Logging setup ####
-today = date.today().strftime("%Y-%m-%d")
-check_name = os.path.basename(__file__).replace(".py","")
-FILENAME_LOG = today + "-"+SERVER_NAME+"-"+check_name+".log"
-
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-# create file handler which logs error messages
-fh = logging.FileHandler(FILENAME_LOG, encoding='utf-8')
-fh.setLevel(logging.WARN)
-# create console handler which logs even debug messages
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-# create formatter and add it to the handlers
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-fh.setFormatter(formatter)
-# add the handlers to logger
-logger.addHandler(ch)
-logger.addHandler(fh)
-
-
-################################################################################
-
-
-def get_resources_from_online(parent_resource, fields='*', filter=None):
+def get_resources_from_online(parent_resource, fields='*', param_filter=None):
     page = 0
     resources = { parent_resource : [] }
     data_to_query = True
     while data_to_query:
         page += 1
         url_resource = SERVER_URL + parent_resource + ".json?fields="+(','.join(fields))+"&pageSize=" + str(PAGESIZE) + "&format=json&order=created:ASC&skipMeta=true&page=" + str(page)
-        if filter:
-            url_resource = url_resource +filter
-        logging.debug(url_resource)
+        if param_filter:
+            url_resource = url_resource + param_filter
+        logger.debug(url_resource)
         response = requests.get(url_resource, auth=HTTPBasicAuth(USERNAME, PASSWORD))
 
         if response.ok:
@@ -73,7 +31,7 @@ def get_resources_from_online(parent_resource, fields='*', filter=None):
 
 def get_resource_fields(resource, resourceUID, fields):
     urlSource = SERVER_URL+resource+"/"+resourceUID+".json?fields="+(",".join(fields))
-    logging.debug(urlSource)
+    logger.debug(urlSource)
     response = requests.get(urlSource, auth=HTTPBasicAuth(USERNAME, PASSWORD))
     return response.json()
 
@@ -81,12 +39,26 @@ def get_resource_fields(resource, resourceUID, fields):
 ################################################################################
 
 
+    
 if __name__ == "__main__":
 
-    PROGRAM_STAGES = "programStages"
-    metadata_resources = get_resources_from_online(parent_resource=PROGRAM_STAGES, fields=["name","id","program[id,name]","programStageDataElements[dataElement]","programStageSections[dataElements]"], filter="filter=formType:eq:SECTION&filter=program:!null")
+    credentials = utils.get_credentials()
     
-    programs = {}
+    SERVER_URL = credentials["server"]
+    SERVER_NAME = credentials["server_name"]
+    USERNAME = credentials["user"]
+    PASSWORD = credentials["password"]
+    PAGESIZE = credentials["page_size"]
+    
+    check_name = os.path.basename(__file__).replace(".py","")    
+    logger = utils.get_logger(SERVER_NAME, check_name)
+    
+    ############################################################################
+    
+    PROGRAM_STAGES = "programStages"
+    metadata_resources = get_resources_from_online(parent_resource=PROGRAM_STAGES, fields=["name","id","program[id,name]","programStageDataElements[dataElement]","programStageSections[dataElements]"], param_filter="filter=formType:eq:SECTION&filter=program:!null")
+    
+    programs_data = {}
     for programStage in metadata_resources[PROGRAM_STAGES]:
         program_uid = programStage["program"]["id"]
         program_name = programStage["program"]["name"]
@@ -102,4 +74,4 @@ if __name__ == "__main__":
         b = set(programStageSectionsDE)
  
         if a != b:
-            logging.warning(f"The DE assigned to this Program Stage are not included in the program Stage Section. Check the programStage '{programStage_name}' ({programStage_uid}) of the program '{program_name}' ({program_uid})")
+            logger.warning(f"The DE assigned to this Program Stage are not included in the program Stage Section. Check the programStage '{programStage_name}' ({programStage_uid}) of the program '{program_name}' ({program_uid})")
