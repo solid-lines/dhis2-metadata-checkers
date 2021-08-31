@@ -8,7 +8,7 @@ import os
 if __name__ == "__main__":
 
     credentials = utils.get_credentials()    
-    check_name = os.path.basename(__file__).replace(".py","")    
+    check_name = os.path.basename(__file__).replace(".py", "")
     logger = utils.get_logger(credentials, check_name)
     
     ############################################################################
