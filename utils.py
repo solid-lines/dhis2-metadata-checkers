@@ -3,7 +3,8 @@ from configparser import ConfigParser
 import argparse
 from datetime import date
 import logging
-
+import requests
+from requests.auth import HTTPBasicAuth
 
 def get_resources_from_file(resource, filename):
     with open(filename, 'r') as f:
@@ -34,7 +35,10 @@ def get_credentials():
     return credentials
 
 
-def get_logger(server_name, check_name):
+def get_logger(credentials, check_name):
+    
+    server_name = credentials["server_name"]
+
     ##### Logging setup ####
     today = date.today().strftime("%Y-%m-%d")
     FILENAME_LOG = today + "-"+server_name+"-"+check_name+".log"
@@ -54,4 +58,43 @@ def get_logger(server_name, check_name):
     # add the handlers to logger
     logger.addHandler(ch)
     logger.addHandler(fh)
-    return logger    
+    return logger
+
+
+def get_resources_from_online(credentials, resource_type, fields='*', param_filter=None):
+    
+    SERVER_URL = credentials["server"]
+    USERNAME = credentials["user"]
+    PASSWORD = credentials["password"]
+    PAGESIZE = credentials["page_size"]
+        
+    page = 0
+    resources = { resource_type : [] }
+    data_to_query = True
+    while data_to_query:
+        page += 1
+        url_resource = f"{SERVER_URL}{resource_type}.json?fields={fields}&pageSize={PAGESIZE}&format=json&order=created:ASC&skipMeta=true&page={page}"
+        if param_filter:
+            url_resource = url_resource + "&" + param_filter
+        logging.debug(url_resource)
+        response = requests.get(url_resource, auth=HTTPBasicAuth(USERNAME, PASSWORD))
+
+        if response.ok:
+            resources[resource_type].extend(response.json()[resource_type])
+            if ("nextPage" not in response.json()["pager"]):
+                data_to_query = False
+        else:
+            # If response code is not ok (200), print the resulting http error code with description
+            response.raise_for_status()
+
+    return resources
+
+def get_resource_fields(credentials, resource, resourceUID, fields):
+    SERVER_URL = credentials["server"]
+    USERNAME = credentials["user"]
+    PASSWORD = credentials["password"]
+        
+    urlSource = SERVER_URL+resource+"/"+resourceUID+".json?fields="+(",".join(fields))
+    logging.debug(urlSource)
+    response = requests.get(urlSource, auth=HTTPBasicAuth(USERNAME, PASSWORD))
+    return response.json()
