@@ -21,7 +21,7 @@ def get_credentials():
     credentials_parser = argparse.ArgumentParser(description='Metadata validator')
     credentials_parser.add_argument('-c', '--credentials', action="store", dest="credentials_name", type=str, help='credentials name')
     args = credentials_parser.parse_args()
-    
+
     if not args.credentials_name:
         args.credentials_name = "credentials_clone"
     
@@ -91,12 +91,27 @@ def get_resources_from_online(credentials, resource_type, fields='*', param_filt
     return resources
 
 
-def get_resource_fields(credentials, resource, resource_uid, fields):
+def get_resource_from_online(credentials, resource_type, resource_uid, fields='*'):
     server_url = credentials["server"]
     username = credentials["user"]
     password = credentials["password"]
         
-    url_resource = server_url+resource+"/"+resource_uid+".json?fields="+(",".join(fields))
+    url_resource = server_url+resource_type+"/"+resource_uid+".json?fields="+fields
     logging.debug(url_resource)
     response = requests.get(url_resource, auth=HTTPBasicAuth(username, password))
     return response.json()
+
+
+def check_OK(credentials, url_resource_uid):
+    logging.debug(url_resource_uid) 
+    username = credentials["user"]
+    password = credentials["password"]
+
+    response = requests.get(url_resource_uid, auth=HTTPBasicAuth(username, password))
+
+    if response.ok:
+        return {"valid": True}
+    else:
+        # If response code is not ok (200), print the resulting http error code with description
+        #response.raise_for_status()
+        return {"valid": False, "response": response}
