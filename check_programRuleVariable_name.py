@@ -24,9 +24,12 @@ if __name__ == "__main__":
     
     for resource in metadata_resources[RESOURCE_TYPE]:
         
-        forbidden = [" and ", " or ", " not "] # (dhis version >= 2.34)
-        
-        if any([substring in resource["name"] for substring in forbidden]):
+        forbidden = ["and", "or", "not"] # (dhis version >= 2.34)
+        #update for inicio de linea y fin de linea
+
+        if any([" "+substring+" " in resource["name"] for substring in forbidden]) or \
+           any([resource["name"].startswith(substring+" ") for substring in forbidden]) or \
+           any([resource["name"].endswith(" "+substring) for substring in forbidden]):
             metadata_url = server_url+RESOURCE_TYPE+"/"+resource["id"]
             message = "The PRV '"+ str(resource["name"]) + "' (" + str(resource["id"]) + ") contains 'and/or/not'. See "+metadata_url
             logger.error(message)
