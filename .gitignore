@@ -132,4 +132,6 @@ dmypy.json
 .project
 .pydevproject
 
+#custom
 credentials.ini
+.idea/
