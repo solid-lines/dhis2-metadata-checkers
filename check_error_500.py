@@ -1,9 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import logging
-import os
 import utils
+import os
 
 
 if __name__ == "__main__":
@@ -25,4 +24,4 @@ if __name__ == "__main__":
             r = utils.check_OK(credentials, metadata_url)
             if not r["valid"]:
                 message = f"The {resource_type} '{resource['name']}' ({resource['id']}) returns  {r['response'].json()}. See {metadata_url}"
-                logging.error(message)
+                logger.error(message)
