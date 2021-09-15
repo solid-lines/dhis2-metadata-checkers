@@ -82,7 +82,10 @@ def get_resources_from_online(credentials, resource_type, fields='*', param_filt
 
         if response.ok:
             resources[resource_type].extend(response.json()[resource_type])
-            if "nextPage" not in response.json()["pager"]:
+            if "pager" not in response.json():
+                logging.warning(f"{resource_type} does not return a pager")
+                data_to_query = False
+            elif "nextPage" not in response.json()["pager"]:
                 data_to_query = False
         else:
             # If response code is not ok (200), print the resulting http error code with description
