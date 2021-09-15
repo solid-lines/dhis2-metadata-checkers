@@ -31,6 +31,9 @@ This script checks if a programStageSection is NOT associated with a programStag
 # check_programRules_without_programRuleActions.py
 This script checks if a program rule has at least one program rule action.
 
+# check_programRules_without_condition.py
+This script checks if a program rule has a condition.
+
 # check_optionSets_options_and_order.py
 This script checks if each optionSet has at least 2 options associated AND checks if the sortOrder of the options is valid (i.e. starts at 1  and the latest sortOrder value is the size of the list of options)
 
