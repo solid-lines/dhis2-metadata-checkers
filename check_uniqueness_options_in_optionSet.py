@@ -31,7 +31,7 @@ if __name__ == "__main__":
         if len(names) != len(set(names)):
             d =  Counter(names)
             res = ["'"+k+"'" for k, v in d.items() if v > 1]
-            message = "There are options in the optionSet "+ str(optionSet["name"]) + "' (" + str(optionSet["id"]) + ") with the same name. The duplicated names are ("+', '.join(res)+"). See "+metadata_url
+            message = f"There are options in the optionSet '{optionSet['name']}' ({optionSet['id']}) with the same name. The duplicated names are ({', '.join(res)}). See {metadata_url}"
             logger.error(message)
             
         # all option's codes that belong to a optionSet MUST be unique
@@ -39,5 +39,5 @@ if __name__ == "__main__":
         if len(codes) != len(set(codes)):
             d =  Counter(codes)
             res = ["'"+k+"'" for k, v in d.items() if v > 1]
-            message = "There are options in the optionSet "+ str(optionSet["name"]) + "' (" + str(optionSet["id"]) + ") with the same code. The duplicated codes are: ("+', '.join(res)+"). See "+metadata_url
+            message = f"There are options in the optionSet '{optionSet['name']}' ({optionSet['id']}) with the same code. The duplicated codes are ({', '.join(res)}). See {metadata_url}"
             logger.error(message)

@@ -26,6 +26,7 @@ if __name__ == "__main__":
     metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=OUG_SET, fields="id,name,organisationUnitGroups[*]")
 
     for oug_set in metadata_resources[OUG_SET]:
+        logger.debug(f"Procession OUG SET '{oug_set['name']}' ({oug_set['id']})")
         
         names = {}
         ous_in_oug_set = []
@@ -35,7 +36,7 @@ if __name__ == "__main__":
             continue
 
         for ougroup in oug_set[OU_GROUP]:
-            org_group = utils.get_resource_from_online(credentials=credentials, resource_type=OU_GROUP, resource_uid=ougroup["id"], fields="id,name,organisationUnits[id, name]")
+            org_group = utils.get_resource_from_online(credentials=credentials, resource_type=OU_GROUP, resource_uid=ougroup["id"], fields="id,name,organisationUnits[id,name]")
             names[org_group["id"]] = org_group["name"]            
             org_units_in_this_ougroup = [ou["id"] for ou in org_group[OU]]
             
