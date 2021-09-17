@@ -22,6 +22,12 @@ This script checks if a program (event/tracker) has at least one programStage (i
 # check_programIndicators_without_expression.py
 This script checks if a program indicator has a expression.
 
+# check_programRules_boolean.py
+This script checks if the program rule variable that appears in '!#{prv}' has boolean/true_only type. 
+
+# check_programRules_evaluation_texts.py
+This script checks that in program rule actions (ASSIGN, DISPLAY TEXT, DISPLAY KEY/VALUE PAIR, SHOW WARNING, SHOW ERROR, WARNING ON COMPLETE, ERROR ON COMPLETE), if the expression to evaluate and assign/display is a text, it has to be in single quotes.
+
 # check_organisationUnitOpeningDateAndClosedDate.py
 This script checks if an organization unit has coherent opening and closed dates (i.e. search for closedDate in the future or openingDate later than closedDate)
 
