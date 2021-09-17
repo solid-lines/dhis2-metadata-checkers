@@ -19,7 +19,7 @@ if __name__ == "__main__":
     #retrieve all metadata_resources
     program_rules = utils.get_resources_from_online(credentials=credentials, resource_type="programRules", fields="id,name,program[id,name],condition")
 
-    prv_not_boolean = utils.get_resources_from_online(credentials=credentials, resource_type="programRuleVariables", fields="name,id,programRuleVariableSourceType,program,dataElement[valueType],trackedEntityAttribute[valueType]", param_filter="filter=dataElement.valueType:!in:[TRUE_ONLY,BOOLEAN]&filter=programRuleVariableSourceType:neq:CALCULATED_VALUE")
+    prv_not_boolean = utils.get_resources_from_online(credentials=credentials, resource_type="programRuleVariables", fields="name,id,programRuleVariableSourceType,program,dataElement[valueType],trackedEntityAttribute[valueType]", param_filter="filter=dataElement.valueType:!in:[TRUE_ONLY,BOOLEAN]&filter=trackedEntityAttribute.valueType:!in:[TRUE_ONLY,BOOLEAN]&filter=programRuleVariableSourceType:neq:CALCULATED_VALUE")
     prv_not_boolean = prv_not_boolean["programRuleVariables"]
 
     #print(f"Number of program rules {len(program_rules['programRules'])}")
@@ -29,7 +29,7 @@ if __name__ == "__main__":
             continue
         #print(pr["condition"])
         # PR-ST-1. !#{varible_name} will only work with boolean type variables (BOOLEAN and TRUE_ONLY).
-        prv_uids_not = [x.replace("!","").strip().replace("#","").replace("{","").replace("}","") for x in re.findall(r'\![ ]*#\{[a-zA-Z0-9 -\._ ]*\}', pr["condition"])]
+        prv_uids_not = [x.replace("!","").strip().replace("A{","").replace("#{","").replace("}","") for x in re.findall(r'\![ ]*[A#]+\{[a-zA-Z0-9 -\._ ]*\}', pr["condition"])]
 
         for prv_name in prv_uids_not:
             not_bool = [x for x in prv_not_boolean if x["name"]==prv_name and x["program"]["id"]==pr["program"]["id"]]
