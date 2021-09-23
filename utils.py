@@ -61,6 +61,104 @@ def get_logger(credentials, check_name):
     logger.addHandler(fh)
     return logger
 
+def get_dhis2_version(credentials):
+    server_url = credentials["server"]
+    username = credentials["user"]
+    password = credentials["password"]
+        
+    url_resource = f"{server_url}system/info"
+    logging.debug(url_resource)
+    response = requests.get(url_resource, auth=HTTPBasicAuth(username, password))
+    if response.ok:
+        return response.json()["version"]
+    else:
+        # If response code is not ok (200), print the resulting http error code with description
+        logging.error(f"Please, double check this call: {url_resource}")
+        response.raise_for_status()
+
+
+
+def validate_generic_expression(credentials, expression):
+    '''
+    Uses the generic /api/expressions/description?expression=<expression-string> for validation
+    '''
+    server_url = credentials["server"]
+    username = credentials["user"]
+    password = credentials["password"]
+        
+    url_resource = f"{server_url}expressions/description?expression={requests.utils.quote(expression)}"
+    logging.debug(url_resource)
+    response = requests.get(url_resource, auth=HTTPBasicAuth(username, password))
+    if response.ok:
+        if response.json()["status"] == "ERROR":
+            return response
+        else:
+            return None
+    else:
+        # If response code is not ok (200), print the resulting http error code with description
+        logging.error(f"Please, double check this call: {url_resource}")
+        response.raise_for_status()
+
+    
+def validate_expression(credentials, resource_type, type_expression, expression):
+    server_url = credentials["server"]
+    username = credentials["user"]
+    password = credentials["password"]
+        
+    url_resource = f"{server_url}{resource_type}/{type_expression}/description"
+    logging.debug(url_resource)
+    response = requests.post(url_resource, data=expression, auth=HTTPBasicAuth(username, password))
+    if response.ok:
+        if response.json()["status"] == "ERROR":
+            return response
+        else:
+            return None
+    else:
+        # If response code is not ok (200), print the resulting http error code with description
+        logging.error(f"Please, double check this call: {url_resource}")
+        response.raise_for_status()
+    
+
+def validate_pr_expression(credentials, resource_type, type_expression, program_id, expression):
+    server_url = credentials["server"]
+    username = credentials["user"]
+    password = credentials["password"]
+    logging.debug(expression)
+        
+    url_resource = f"{server_url}{resource_type}/{type_expression}/description?programId={program_id}"
+    logging.debug(url_resource)
+    response = requests.post(url_resource, data=expression, auth=HTTPBasicAuth(username, password))
+    if response.ok:
+        if response.json()["status"] == "ERROR":
+            return response
+        else:
+            return None
+    else:
+        # If response code is not ok (200), print the resulting http error code with description
+        logging.error(f"Please, double check this call: {url_resource}")
+        response.raise_for_status()
+
+
+def validate_pra_expression(credentials, resource_type, type_expression, program_id, expression):
+    server_url = credentials["server"]
+    username = credentials["user"]
+    password = credentials["password"]
+        
+    url_resource = f"{server_url}{resource_type}/{type_expression}/expression/description?programId={program_id}"
+    logging.debug(url_resource)
+    response = requests.post(url_resource, data=expression, auth=HTTPBasicAuth(username, password))
+    if response.ok:
+        if response.json()["status"] == "ERROR":
+            return response
+        else:
+            return None
+    elif response.status_code == 409:
+        return response
+    else:
+        # If response code is not ok (200), print the resulting http error code with description
+        logging.error(f"Please, double check this call: {url_resource}")
+        response.raise_for_status()
+
 
 def get_resources_from_online(credentials, resource_type, fields='*', param_filter=None):
     

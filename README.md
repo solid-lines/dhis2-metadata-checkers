@@ -13,6 +13,9 @@
 5. Check the log file
 
 
+# check_expressions.py
+This scripts check if different expressions are well-formed. The expressions are: Indicator (numerator and denominator), Program Indicator (expression and filter), Program Rule (condition -since 2.35-), Program Rule Actions (data expression -since 2.37-) and Predictors (generator data and sampleSkipTest).
+
 # check_options_without_optionSet.py
 This script checks if an option is NOT associated with an optionSet (i.e. search for orphan options).
 
