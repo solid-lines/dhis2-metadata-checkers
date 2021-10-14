@@ -1,8 +1,8 @@
 @echo off 
 set credentials=credentials_who_tracker_dev
 
-python3 check_de_ps_pss.py --credentials=%credentials%
 python3 check_de_aggregate_without_dataset.py --credentials=%credentials%
+python3 check_de_ps_pss.py --credentials=%credentials%
 python3 check_error_500.py --credentials=%credentials%
 python3 check_expressions.py --credentials=%credentials%
 python3 check_link_programRuleAction_de.py --credentials=%credentials%
@@ -19,8 +19,8 @@ python3 check_programRules_boolean.py --credentials=%credentials%
 python3 check_programRules_evaluation_texts.py --credentials=%credentials%
 python3 check_programRules_without_condition.py --credentials=%credentials%
 python3 check_programRules_without_programRuleActions.py --credentials=%credentials%
-python3 check_programs_without_programStages.py --credentials=%credentials%
 python3 check_programRuleVariable_name.py --credentials=%credentials%
+python3 check_programs_without_programStages.py --credentials=%credentials%
 python3 check_programStages_without_program.py --credentials=%credentials%
 python3 check_programStageSections_without_programStage.py --credentials=%credentials%
 python3 check_programsWithoutRegistration_with_TE_type.py --credentials=%credentials%
