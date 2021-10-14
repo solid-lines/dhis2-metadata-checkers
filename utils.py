@@ -216,3 +216,37 @@ def check_OK(credentials, url_resource_uid):
         # If response code is not ok (200), print the resulting http error code with description
         #response.raise_for_status()
         return {"valid": False, "response": response}
+
+
+def has_trailing_space(input_text):
+    if len(input_text) != len(input_text.strip()):
+        return True
+
+
+def has_double_space(input_text):
+    if "  " in input_text:
+        return True
+
+
+def has_parenthesis_extra_space(input_text):
+    if "( " in input_text or " )" in input_text:
+        return True
+
+
+def has_colon_at_end(input_text):
+    if input_text and (len(input_text.strip()) > 0) and input_text.strip()[-1] == ':':
+        return True
+
+
+def empty_after_strip(input_text):
+    if input_text and (len(input_text.strip()) == 0):
+        return True
+
+# server url includes /api/
+def get_url_maintenance(server_url, resource_type, resource_id):
+    if resource_type == "dataElements":
+        return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/dataElementSection/dataElement/{resource_id}"
+
+# server url includes /api/
+def get_url_api(server_url, resource_type, resource_id):
+    return server_url+resource_type+"/"+resource_id

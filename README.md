@@ -12,6 +12,8 @@
 4. Run the script
 5. Check the log file
 
+# check_de_aggregate_without_dataset.py
+This script checks if a data element is NOT associated with any dataSet (i.e. search for dataElements).
 
 # check_expressions.py
 This scripts check if different expressions are well-formed. The expressions are: Indicator (numerator and denominator), Program Indicator (expression and filter), Program Rule (condition -since 2.35-), Program Rule Actions (data expression -since 2.37-) and Predictors (generator data and sampleSkipTest).
