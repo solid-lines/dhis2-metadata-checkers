@@ -63,7 +63,7 @@ This script checks if a program rule has a condition.
 # check_programRules_without_programRuleActions.py
 This script checks if a program rule has at least one program rule action.
 
-# check check_programRuleVariable_name.py
+# check_programRuleVariable_name.py
 This script checks if a program rule variable has not "and", "or" or "not" in its name 
 
 # check_programs_without_programStages.py
