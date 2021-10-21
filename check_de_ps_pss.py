@@ -11,6 +11,8 @@ if __name__ == "__main__":
     check_name = os.path.basename(__file__).replace(".py", "")
     logger = utils.get_logger(credentials, check_name)
     
+    server_url = credentials["server"]
+    
     ############################################################################
     
     PROGRAM_STAGES = "programStages"
@@ -29,6 +31,9 @@ if __name__ == "__main__":
 
         a = set(programStageDataElements)
         b = set(programStageSectionsDE)
- 
+        
+        url_ui = utils.get_url_maintenance(server_url, "programs", program_uid)
+
+
         if a != b:
-            logger.warning(f"The DE assigned to this Program Stage are not included in the program Stage Section. Check the programStage '{programStage_name}' ({programStage_uid}) of the program '{program_name}' ({program_uid})")
+            logger.warning(f"The DE assigned to this Program Stage is not included in the program Stage Section. Check the programStage '{programStage_name}' ({programStage_uid}) of the program '{program_name}' ({program_uid}). See {url_ui}")

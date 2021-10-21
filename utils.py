@@ -242,10 +242,14 @@ def empty_after_strip(input_text):
     if input_text and (len(input_text.strip()) == 0):
         return True
 
+
 # server url includes /api/
 def get_url_maintenance(server_url, resource_type, resource_id):
     if resource_type == "dataElements":
         return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/dataElementSection/dataElement/{resource_id}"
+    if resource_type == "programs":
+        return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/programSection/program/{resource_id}"
+
 
 # server url includes /api/
 def get_url_api(server_url, resource_type, resource_id):
