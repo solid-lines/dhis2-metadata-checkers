@@ -249,6 +249,8 @@ def get_url_maintenance(server_url, resource_type, resource_id):
         return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/dataElementSection/dataElement/{resource_id}"
     if resource_type == "programs":
         return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/programSection/program/{resource_id}"
+    if resource_type == "indicators":
+        return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/indicatorSection/indicator/{resource_id}"
 
 
 # server url includes /api/
