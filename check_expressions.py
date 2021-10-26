@@ -145,13 +145,48 @@ if __name__ == "__main__":
         logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
         logger.error(e)
         response[RESOURCE_TYPE] = {}
-          
+           
     for resource in response[RESOURCE_TYPE]:
+        logger.debug(f"Check PREDICTOR={resource['id']}")
         validation_expression_generator = utils.validate_expression(credentials, RESOURCE_TYPE, "expression", expression=resource["generator"][EXPRESSION_NAME])
         if validation_expression_generator:
             logger.error(f"Expression problem. Double check the generator {EXPRESSION_NAME} of the Predictor '{resource['name']}' ({resource['id']}). Response {validation_expression_generator.json()}" )
-         
+          
         if "sampleSkipTest" in resource:
             validation_expression_sampleSkipTest = utils.validate_expression(credentials, RESOURCE_TYPE, "expression", expression=resource["sampleSkipTest"][EXPRESSION_NAME])
             if validation_expression_sampleSkipTest:
                 logger.error(f"Expression problem. Double check the sampleSkipTest {EXPRESSION_NAME} of the Predictor '{resource['name']}' ({resource['id']}). Response {validation_expression_sampleSkipTest.json()}" )
+ 
+################################################################################
+     
+    # since 2.29
+            
+    RESOURCE_TYPE = "validationRules"
+    
+    logger.info(f"Processing resource type: {RESOURCE_TYPE}")
+    try:
+        response = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE, fields='id,name,leftSide[expression],rightSide[expression]', param_filter=None)
+    except Exception as e: 
+        logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
+        logger.error(e)
+        response[RESOURCE_TYPE] = {}
+
+
+    for resource in response[RESOURCE_TYPE]:
+        logger.debug(f"Check VR={resource['id']}")
+        EXPRESSION_NAME = "leftSide"
+        if EXPRESSION_NAME in resource: 
+            validation_expression = utils.validate_expression(credentials, RESOURCE_TYPE, "expression", expression=resource[EXPRESSION_NAME]['expression'])
+            if validation_expression:
+                logger.error(f"Expression problem. Double check the leftSide expression of the VR '{resource['name']}' ({resource['id']}). Response {validation_expression.json()}" )
+        else:
+            logger.error(f"VR '{resource['name']}' ({resource['id']}) without leftSide expression" )
+    
+    
+        EXPRESSION_NAME = "rightSide"
+        if EXPRESSION_NAME in resource: 
+            validation_filter = utils.validate_expression(credentials, RESOURCE_TYPE, "expression", expression=resource[EXPRESSION_NAME]['expression'])
+            if validation_filter:
+                logger.error(f"Expression problem. Double check the rightSide expression of the VR '{resource['name']}' ({resource['id']}). Response {validation_expression.json()}" )
+        else:
+            logger.error(f"VR '{resource['name']}' ({resource['id']}) without rightSide expression" )
