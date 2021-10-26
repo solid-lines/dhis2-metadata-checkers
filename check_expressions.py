@@ -26,18 +26,22 @@ if __name__ == "__main__":
         logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
         logger.error(e)
         response[RESOURCE_TYPE] = {}
-             
-    for resource in response[RESOURCE_TYPE]:
+              
+    for resource in response[RESOURCE_TYPE]:       
+        logger.debug(f"Check I={resource['id']}")
+        url_ui = utils.get_url_maintenance(server_url, RESOURCE_TYPE, resource['id'])
+
         EXPRESSION_NAME = "numerator"
         validation_numerator = utils.validate_expression(credentials, RESOURCE_TYPE, "expression", expression=resource[EXPRESSION_NAME])
         if validation_numerator:
-            logger.error(f"Expression problem. Double check the numerator of the I '{resource['name']}' ({resource['id']}). Response {validation_numerator.json()}" )
-
+            logger.error(f"Expression problem. Double check the numerator of the I '{resource['name']}' ({resource['id']}). Response {validation_numerator.json()}. See {url_ui}" )
+ 
         EXPRESSION_NAME = "denominator"
         validation_denominator = utils.validate_expression(credentials, RESOURCE_TYPE, "expression", expression=resource[EXPRESSION_NAME])
         if validation_denominator:
-            logger.error(f"Expression problem. Double check the denominator of the I '{resource['name']}' ({resource['id']}). Response {validation_denominator.json()}" )
-     
+            logger.error(f"Expression problem. Double check the denominator of the I '{resource['name']}' ({resource['id']}). Response {validation_denominator.json()}. See {url_ui}" )
+
+      
 ################################################################################
      
     # since 2.29
