@@ -4,8 +4,7 @@
 import os
 import utils
 
-if __name__ == "__main__":
-
+def main():
     credentials = utils.get_credentials()
     check_name = os.path.basename(__file__).replace(".py", "")
     logger = utils.get_logger(credentials, check_name)
@@ -115,7 +114,8 @@ if __name__ == "__main__":
         logger.info(
             f"Skip Program Rules validation because the dhis2 version instance is lower than 2.35 ({dhis2_version})")
 
-        # since 2.37
+
+    # since 2.37
 
     if dhis2_version_detail >= 37:
 
@@ -216,3 +216,8 @@ if __name__ == "__main__":
                     f"Expression problem. Double check the rightSide expression of the VR '{resource['name']}' ({resource['id']}). Response {validation_expression.json()}")
         else:
             logger.error(f"VR '{resource['name']}' ({resource['id']}) without rightSide expression")
+
+
+if __name__ == "__main__":
+    main()
+
