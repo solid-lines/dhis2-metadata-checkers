@@ -36,6 +36,9 @@ This script checks if the data element associated to a program rule variable exi
 # check_link_programRuleVariable_de.py
 This script checks if the tracked entity attribute associated to a program rule variable exists and belongs to the program (or the tracked entity type) that the program rule is associated to.
 
+# check_naming_convention.py
+This script checks if the resources follow the best practices of naming convention.
+
 # check_options_in_filters.py
 This script checks if the options present in the filter of eventCharts and eventReports are valid (comparing them with the current options of the optionSets related to the dataelements referenced in the filter).
 
