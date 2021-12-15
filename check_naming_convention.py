@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     PARENT_RESOURCE = "dataElements"
 
-    for n in ["name", "shortName", "formName"]:
+    for n in ["name", "shortName"]:
         #retrieve all metadata_resources
         metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=PARENT_RESOURCE, fields="id,"+n, param_filter="filter="+n+":ilike:number of")
         
