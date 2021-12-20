@@ -51,6 +51,9 @@ This script checks if each optionSet has at least 2 options associated AND check
 # check_organisationUnitOpeningDateAndClosedDate.py
 This script checks if an organization unit has coherent opening and closed dates (i.e. search for closedDate in the future or openingDate later than closedDate)
 
+# check_PR_PI_program_stage_name.py
+This script checks the use of "program_stage_name" (due to issues if the stage name is translated) in PR expression, PRA exression, PI expression, PI filter. 
+
 # check_programIndicators_without_expression.py
 This script checks if a program indicator has a expression.
 
