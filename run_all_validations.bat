@@ -14,6 +14,7 @@ python3 check_option_code.py --credentials=%credentials%
 python3 check_options_in_filters.py --credentials=%credentials%
 python3 check_options_without_optionSet.py --credentials=%credentials%
 python3 check_optionSets_options_and_order.py --credentials=%credentials%
+python3 check_optionSets_options_and_datatype.py --credentials=%credentials%
 python3 check_organisationUnitOpeningDateAndClosedDate.py --credentials=%credentials%
 python3 check_PR_PI_program_stage_name.py --credentials=%credentials%
 python3 check_programIndicators_without_expression.py --credentials=%credentials%
