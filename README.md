@@ -18,6 +18,9 @@ This script checks if a data element is NOT associated with any dataSet (i.e. se
 # check_de_ps_pss.py
 This script checks if the data elements associated to a program stage are used in the program stage instance.
 
+# check_de_valuetype_aggregationtype.py
+This script checks if the aggregation type of the data elements are inline with the expected values.
+
 # check_error_500.py
 This script checks if resource_types the resource "reportTables", "eventReports", "eventCharts", "dashboards", "maps" and "visualizations" (> 2.33) returns a HTTP code 500.
 
