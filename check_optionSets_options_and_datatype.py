@@ -10,7 +10,7 @@ def code_compatible(value, valueType):
         return True
 
     # TODO: add float support
-    if valueType=="NUMBER" or valueType=="INTEGER" or valueType=="INTEGER_ZERO_OR_POSITIVE":
+    if valueType=="NUMBER" or valueType=="INTEGER" or valueType=="INTEGER_ZERO_OR_POSITIVE" or valueType=="INTEGER_POSITIVE":
         if value.isdigit():
             return True
 
