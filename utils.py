@@ -270,6 +270,10 @@ def empty_after_strip(input_text):
 
 # server url includes /api/
 def get_url_maintenance(server_url, resource_type, resource_id):
+    if resource_type == "dataSets-dataEntryForms":
+        return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/dataSetSection/dataSet/{resource_id}/dataEntryForm"
+    if resource_type == "dataSets":
+        return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/dataSetSection/dataSet/{resource_id}"
     if resource_type == "dataElements":
         return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/dataElementSection/dataElement/{resource_id}"
     if resource_type == "programs" or resource_type == "programStages":

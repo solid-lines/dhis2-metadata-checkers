@@ -55,3 +55,24 @@ if __name__ == "__main__":
         else:
             message = f"The program '{program_name}' ({program_id}) has an empty custom form. See {url_ui} or {url_api}"
             logger.error(message)
+
+    ############################################################################
+
+    PARENT_RESOURCE = "dataSets"
+
+    #retrieve all metadata_resources
+    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=PARENT_RESOURCE, fields="id,name,dataEntryForm[id,htmlCode]", param_filter="filter=dataEntryForm:!null")
+    
+    #check condition (programStage with dataEntryForm)
+    for dataset in metadata_resources[PARENT_RESOURCE]:
+        url_api = utils.get_url_api(server_url, PARENT_RESOURCE, dataset["id"])
+        url_ui = utils.get_url_maintenance(server_url, PARENT_RESOURCE+"-dataEntryForms", dataset["id"])
+        
+        dataset_id = dataset['id']
+        dataset_name = dataset['name']
+        if "htmlCode" in dataset["dataEntryForm"]:
+            message = f"The dataSet '{dataset_name}' ({dataset_id}) has a custom form. See {url_ui} or {url_api}"
+            logger.warn(message)
+        else:
+            message = f"The dataSet '{dataset_name}' ({dataset_id}) has an empty custom form. See {url_ui} or {url_api}"
+            logger.error(message)
