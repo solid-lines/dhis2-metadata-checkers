@@ -5,6 +5,7 @@ from datetime import date
 import logging
 import requests
 from requests.auth import HTTPBasicAuth
+import collections
 
 
 def get_resources_from_file(resource, filename):
@@ -48,7 +49,7 @@ def get_logger(credentials, check_name):
     logger.setLevel(logging.DEBUG)
     # create file handler which logs error messages
     fh = logging.FileHandler(filename_log, encoding='utf-8')
-    fh.setLevel(logging.WARN)
+    fh.setLevel(logging.INFO)
     # create console handler which logs even debug messages
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
@@ -159,6 +160,12 @@ def validate_pra_expression(credentials, resource_type, type_expression, program
         logging.error(f"Please, double check this call: {url_resource}")
         response.raise_for_status()
 
+def checkIfDuplicates(listOfElems):
+    ''' Check if given list contains any duplicates '''
+    if len(listOfElems) == len(set(listOfElems)):
+        return False
+    else:
+        return True
 
 def get_resources_from_online(credentials, resource_type, fields='*', param_filter=None):
     
@@ -169,17 +176,24 @@ def get_resources_from_online(credentials, resource_type, fields='*', param_filt
         
     page = 0
     resources = {resource_type: []}
+    resources_id = []
+    
     data_to_query = True
     while data_to_query:
         page += 1
-        url_resource = f"{server_url}{resource_type}.json?fields={fields}&pageSize={pagesize}&format=json&order=created:ASC&skipMeta=true&page={page}"
+        url_resource = f"{server_url}{resource_type}?fields={fields}&pageSize={pagesize}&format=json&order=created:ASC&skipMeta=true&format=json&page={page}"
         if param_filter:
             url_resource = url_resource + "&" + param_filter
+
         logging.debug(url_resource)
         response = requests.get(url_resource, auth=HTTPBasicAuth(username, password))
 
         if response.ok:
             resources[resource_type].extend(response.json()[resource_type])
+            if resource_type not in["resources"]:
+                resources_id.extend([x['id'] for x in response.json()[resource_type]])
+                if checkIfDuplicates(resources_id):
+                    logging.error(f"Duplicates in pagination = {[item for item, count in collections.Counter(resources_id).items() if count > 1]}")
             if "pager" not in response.json():
                 logging.warning(f"{resource_type} does not return a pager")
                 data_to_query = False
@@ -233,6 +247,17 @@ def has_parenthesis_extra_space(input_text):
         return True
 
 
+def has_parenthesis_extra_space_double(input_text):
+    if " ( " in input_text or " ) " in input_text:
+        return True
+
+
+import re
+def has_parenthesis_without_space(input_text):
+    if re.search("[a-zA-Z]\([^sSd]", input_text):
+        return True
+
+
 def has_colon_at_end(input_text):
     if input_text and (len(input_text.strip()) > 0) and input_text.strip()[-1] == ':':
         return True
@@ -247,7 +272,7 @@ def empty_after_strip(input_text):
 def get_url_maintenance(server_url, resource_type, resource_id):
     if resource_type == "dataElements":
         return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/dataElementSection/dataElement/{resource_id}"
-    if resource_type == "programs":
+    if resource_type == "programs" or resource_type == "programStages":
         return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/programSection/program/{resource_id}"
     if resource_type == "indicators":
         return f"{server_url.replace('/api/','')}/dhis-web-maintenance/index.html#/edit/indicatorSection/indicator/{resource_id}"
