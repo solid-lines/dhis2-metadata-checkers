@@ -49,7 +49,7 @@ if __name__ == "__main__":
         
         program_id = program['id']
         program_name = program['name']
-        if "htmlCode" in programStage["dataEntryForm"]:
+        if "htmlCode" in program["dataEntryForm"]:
             message = f"The program '{program_name}' ({program_id}) has a custom form. See {url_ui} or {url_api}"
             logger.warn(message)
         else:
