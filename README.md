@@ -12,6 +12,9 @@
 4. Run the script
 5. Check the log file
 
+# check_customForm_existence.py
+This script checks if custom form is present in a program or a program stage (there shouldn't be custom form in packages and there must not be empty custom forms
+
 # check_de_aggregate_without_dataset.py
 This script checks if a data element is NOT associated with any dataSet (i.e. search for dataElements).
 
