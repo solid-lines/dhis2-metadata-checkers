@@ -13,9 +13,9 @@ def main():
     ################################################################################
 
     # since 2.29
-
+ 
     RESOURCE_TYPE = "indicators"
-
+ 
     logger.info(f"Processing resource type: {RESOURCE_TYPE}")
     try:
         response = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE,
@@ -24,31 +24,31 @@ def main():
         logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
         logger.error(e)
         response[RESOURCE_TYPE] = {}
-
+ 
     for resource in response[RESOURCE_TYPE]:
         logger.debug(f"Check I={resource['id']}")
         url_ui = utils.get_url_maintenance(server_url, RESOURCE_TYPE, resource['id'])
-
+ 
         EXPRESSION_NAME = "numerator"
         validation_numerator = utils.validate_expression(credentials, RESOURCE_TYPE, "expression",
                                                          expression=resource[EXPRESSION_NAME])
         if validation_numerator:
             logger.error(
                 f"Expression problem. Double check the numerator of the I '{resource['name']}' ({resource['id']}). Response {validation_numerator.json()}. See {url_ui}")
-
+ 
         EXPRESSION_NAME = "denominator"
         validation_denominator = utils.validate_expression(credentials, RESOURCE_TYPE, "expression",
                                                            expression=resource[EXPRESSION_NAME])
         if validation_denominator:
             logger.error(
                 f"Expression problem. Double check the denominator of the I '{resource['name']}' ({resource['id']}). Response {validation_denominator.json()}. See {url_ui}")
-
+ 
     ################################################################################
-
+ 
     # since 2.29
-
+ 
     RESOURCE_TYPE = "programIndicators"
-
+ 
     logger.info(f"Processing resource type: {RESOURCE_TYPE}")
     try:
         response = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE,
@@ -58,7 +58,7 @@ def main():
         logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
         logger.error(e)
         response[RESOURCE_TYPE] = {}
-
+ 
     for resource in response[RESOURCE_TYPE]:
         logger.debug(f"Check PI={resource['id']}")
         EXPRESSION_NAME = "expression"
@@ -67,31 +67,31 @@ def main():
                                                               expression=resource[EXPRESSION_NAME])
             if validation_expression:
                 logger.error(
-                    f"Expression problem. Double check the expression of the PI '{resource['name']}' ({resource['id']}) from Program '{resource['program']['name']}' ({resource['program']['id']}). Response {validation_expression.json()}")
+                    f"Expression problem. Program '{resource['program']['name']}' ({resource['program']['id']}). Double check the expression of the PI '{resource['name']}' ({resource['id']}). Response {validation_expression.json()}")
         else:
             logger.error(
-                f"PI '{resource['name']}' ({resource['id']}) from Program '{resource['program']['name']}' ({resource['program']['id']}) without expression")
-
+                f"PI 'Program '{resource['program']['name']}' ({resource['program']['id']}). {resource['name']}' ({resource['id']}) without expression")
+ 
         EXPRESSION_NAME = "filter"
         if EXPRESSION_NAME in resource:
             validation_filter = utils.validate_expression(credentials, RESOURCE_TYPE, EXPRESSION_NAME,
                                                           expression=resource[EXPRESSION_NAME])
             if validation_filter:
                 logger.error(
-                    f"Expression problem. Double check the filter of the PI '{resource['name']}' ({resource['id']}) from Program '{resource['program']['name']}' ({resource['program']['id']}). Response {validation_filter.json()}")
-
+                    f"Expression problem. Program '{resource['program']['name']}' ({resource['program']['id']}). Double check the filter of the PI '{resource['name']}' ({resource['id']}). Response {validation_filter.json()}")
+ 
     ################################################################################
 
     # since 2.35
-
+ 
     dhis2_version = utils.get_dhis2_version(credentials)
     dhis2_version_detail = int(dhis2_version.split(".")[1])
-
+ 
     if dhis2_version_detail >= 35:
-
+ 
         RESOURCE_TYPE = "programRules"
         EXPRESSION_NAME = "condition"
-
+ 
         logger.info(f"Processing resource type: {RESOURCE_TYPE}")
         try:
             response = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE,
@@ -101,7 +101,7 @@ def main():
             logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
             logger.error(e)
             response[RESOURCE_TYPE] = {}
-
+ 
         for resource in response[RESOURCE_TYPE]:
             logger.debug(f"Check PR={resource['id']}")
             validation_condition = utils.validate_pr_expression(credentials, RESOURCE_TYPE, EXPRESSION_NAME,
@@ -109,7 +109,7 @@ def main():
                                                                 expression=resource[EXPRESSION_NAME])
             if validation_condition:
                 logger.error(
-                    f"Expression problem. Double check the {EXPRESSION_NAME} of the PR '{resource['name']}' ({resource['id']}) from Program '{resource['program']['name']}' ({resource['program']['id']}). Response {validation_condition.json()}")
+                    f"Expression problem. Program '{resource['program']['name']}' ({resource['program']['id']}). Double check the {EXPRESSION_NAME} of the PR '{resource['name']}' ({resource['id']}). Response {validation_condition.json()}")
     else:
         logger.info(
             f"Skip Program Rules validation because the dhis2 version instance is lower than 2.35 ({dhis2_version})")
@@ -140,7 +140,7 @@ def main():
                                                                            'id'], expression=resource[EXPRESSION_NAME])
                 if validation_rule_action is not None:
                     logger.error(
-                        f"Expression problem. Double check the PRA ({resource['id']}) of PR '{resource['programRule']['name']}' ({resource['programRule']['id']}) from Program '{resource['programRule']['program']['name']}' ({resource['programRule']['program']['id']}). Response {validation_rule_action.json()}")
+                        f"Expression problem. Program '{resource['programRule']['program']['name']}' ({resource['programRule']['program']['id']}). Double check the PRA ({resource['id']}) of PR '{resource['programRule']['name']}' ({resource['programRule']['id']}). Response {validation_rule_action.json()}")
 
     else:
         logger.info(

@@ -18,11 +18,11 @@ if __name__ == "__main__":
     # Program Rule expression (condition)
             
     RESOURCE_TYPE = "programRules"
-    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE, fields="id,name", param_filter="filter=condition:like:program_stage_name")
+    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE, fields="id,name,program[id,name]", param_filter="filter=condition:like:program_stage_name")
     
     for resource in metadata_resources[RESOURCE_TYPE]:
         url_ui = utils.get_url_maintenance(server_url, RESOURCE_TYPE, resource['id'])
-        message = f"The PR '{resource['name']}' ({resource['id']}) contains 'program_stage_name' in the filter. See {url_ui}" 
+        message = f"In Program '{resource['program']['name']}' ({resource['program']['id']}), the PR '{resource['name']}' ({resource['id']}) contains 'program_stage_name' in the filter. See {url_ui}" 
         logger.error(message)
 
     ############################################################################    
@@ -30,11 +30,11 @@ if __name__ == "__main__":
     # Program Rule Action expression
             
     RESOURCE_TYPE = "programRuleActions"
-    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE, fields="id,data,programRule[id,name]", param_filter="filter=data:like:program_stage_name")
+    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE, fields="id,data,programRule[id,name,program[name,id]]", param_filter="filter=data:like:program_stage_name")
     
     for resource in metadata_resources[RESOURCE_TYPE]:
         url_ui = utils.get_url_maintenance(server_url, "programRules", resource['programRule']['id'])
-        message = f"The PR '{resource['programRule']['name']}' ({resource['programRule']['id']}) contains 'program_stage_name' in a PRAction ({resource['id']}). See {url_ui}" 
+        message = f"In Program '{resource['programRule']['program']['name']}' ({resource['programRule']['program']['id']}), the PR '{resource['programRule']['name']}' ({resource['programRule']['id']}) contains 'program_stage_name' in a PRAction ({resource['id']}). See {url_ui}" 
         logger.error(message)
 
     ############################################################################    
@@ -42,11 +42,11 @@ if __name__ == "__main__":
     # Program Indicator: expression
             
     RESOURCE_TYPE = "programIndicators"
-    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE, fields="id,name", param_filter="filter=expression:like:program_stage_name")
+    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE, fields="id,name,program[id,name]", param_filter="filter=expression:like:program_stage_name")
     
     for resource in metadata_resources[RESOURCE_TYPE]:
         url_ui = utils.get_url_maintenance(server_url, RESOURCE_TYPE, resource['id'])
-        message = f"The PI '{resource['name']}' ({resource['id']}) contains 'program_stage_name' in the expression. See {url_ui}" 
+        message = f"In Program '{resource['program']['name']}' ({resource['program']['id']}), the PI '{resource['name']}' ({resource['id']}) contains 'program_stage_name' in the expression. See {url_ui}" 
         logger.error(message)
 
     ############################################################################    
@@ -58,5 +58,5 @@ if __name__ == "__main__":
     
     for resource in metadata_resources[RESOURCE_TYPE]:
         url_ui = utils.get_url_maintenance(server_url, RESOURCE_TYPE, resource['id'])
-        message = f"From program '{resource['program']['name']}' ({resource['program']['id']}), the PI '{resource['name']}' ({resource['id']}) contains 'program_stage_name' in the filter. See {url_ui}" 
+        message = f"In program '{resource['program']['name']}' ({resource['program']['id']}), the PI '{resource['name']}' ({resource['id']}) contains 'program_stage_name' in the filter. See {url_ui}" 
         logger.error(message)

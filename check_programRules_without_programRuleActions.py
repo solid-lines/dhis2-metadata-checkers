@@ -19,12 +19,12 @@ if __name__ == "__main__":
     CHILD_RESOURCE = "programRuleActions" # Watch out singular and plural.
 
     #retrieve all metadata_resources
-    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=PARENT_RESOURCE, fields="id,name,program[name]", param_filter="filter="+CHILD_RESOURCE+":empty")
+    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=PARENT_RESOURCE, fields="id,name,program[name,id]", param_filter="filter="+CHILD_RESOURCE+":empty")
 
     #check condition
     #check if all programStageSections are associated to a programStage
     for resource in metadata_resources[PARENT_RESOURCE]:
         if (not CHILD_RESOURCE in resource):
             metadata_url = server_url+PARENT_RESOURCE+"/"+resource["id"]
-            message = f"The Program Rule '{resource['name']}' ({resource['id']}) from Program '{resource['program']['name']}' has not Program Rule Actions associated. See {metadata_url}"
+            message = f"In Program '{resource['program']['name']}' ({resource['program']['id']}), the Program Rule '{resource['name']}' ({resource['id']}) has not Program Rule Actions associated. See {metadata_url}"
             logger.error(message)

@@ -21,7 +21,7 @@ if __name__ == "__main__":
         #retrieve all metadata_resources
         metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=PARENT_RESOURCE)
         
-        logger.info(f'Retrieved {len(metadata_resources[PARENT_RESOURCE])} {PARENT_RESOURCE}')
+        logger.debug(f'Retrieved {len(metadata_resources[PARENT_RESOURCE])} {PARENT_RESOURCE}')
         for eventReportChart in metadata_resources[PARENT_RESOURCE]:
             flag = False
             issues = []

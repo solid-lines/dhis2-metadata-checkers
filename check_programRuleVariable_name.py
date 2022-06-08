@@ -20,7 +20,7 @@ if __name__ == "__main__":
     RESOURCE_TYPE = "programRuleVariables"
 
     #retrieve all metadata_resources
-    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE, fields="id,name", param_filter=None)
+    metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE, fields="id,name,program[name,id]", param_filter=None)
     
     for resource in metadata_resources[RESOURCE_TYPE]:
         
@@ -31,10 +31,10 @@ if __name__ == "__main__":
            any([resource["name"].startswith(substring+" ") for substring in forbidden]) or \
            any([resource["name"].endswith(" "+substring) for substring in forbidden]):
             metadata_url = server_url+RESOURCE_TYPE+"/"+resource["id"]
-            message = "The PRV '"+ str(resource["name"]) + "' (" + str(resource["id"]) + ") contains 'and/or/not'. See "+metadata_url
+            message = f"In Program '{resource['program']['name']}' ({resource['program']['id']}), the PRV {resource['name']} ({resource['id']}) contains 'and/or/not'. See {metadata_url}"
             logger.error(message)
 
         if not bool(re.match("^[a-zA-Z\d_\-\.\ ]+$", resource["name"])):
             metadata_url = server_url+RESOURCE_TYPE+"/"+resource["id"]
-            message = "The PRV '"+ str(resource["name"]) + "' (" + str(resource["id"]) + ") contains unexpected characters. See "+metadata_url
+            message = f"In Program '{resource['program']['name']}' ({resource['program']['id']}), the PRV {resource['name']} ({resource['id']}) contains unexpected characters. See {metadata_url}"
             logger.error(message)
