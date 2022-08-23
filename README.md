@@ -60,6 +60,9 @@ This script checks if the datatype of a DE associated to a optionSet is the same
 # check_organisationUnitOpeningDateAndClosedDate.py
 This script checks if an organization unit has coherent opening and closed dates (i.e. search for closedDate in the future or openingDate later than closedDate)
 
+# check_orphan_optionSets.py
+This script looks for optionSets that are not used in the system (neither in DE or TEA).
+
 # check_PR_PI_program_stage_name.py
 This script checks the use of "program_stage_name" (due to issues if the stage name is translated) in PR expression, PRA exression, PI expression, PI filter. 
 
