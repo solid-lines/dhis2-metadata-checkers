@@ -136,8 +136,8 @@ def validate_pr_expression(credentials, resource_type, type_expression, program_
             return None
     else:
         # If response code is not ok (200), print the resulting http error code with description
-        logging.error(f"Please, double check this call: {url_resource}")
-        response.raise_for_status()
+        logging.error(f"Please, double check this call: {url_resource} {expression}")
+        #response.raise_for_status()
 
 
 def validate_pra_expression(credentials, resource_type, type_expression, program_id, expression):
@@ -211,7 +211,7 @@ def get_resource_from_online(credentials, resource_type, resource_uid, fields='*
     username = credentials["user"]
     password = credentials["password"]
         
-    url_resource = server_url+resource_type+"/"+resource_uid+".json?fields="+fields
+    url_resource = server_url+resource_type+"/"+resource_uid+"?format=json&fields="+fields
     logging.debug(url_resource)
     response = requests.get(url_resource, auth=HTTPBasicAuth(username, password))
     return response.json()
