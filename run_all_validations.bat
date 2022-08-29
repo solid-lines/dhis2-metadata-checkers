@@ -2,6 +2,7 @@
 set credentials=credentials_who_tracker_dev
 
 
+python3 check_authorities_and_userRoles.py --credentials=%credentials%
 python3 check_customForm_existence.py --credentials=%credentials%
 python3 check_de_aggregate_without_dataset.py --credentials=%credentials%
 python3 check_de_ps_pss.py --credentials=%credentials%
