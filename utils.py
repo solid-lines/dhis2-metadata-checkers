@@ -191,7 +191,7 @@ def get_resources_from_online(credentials, resource_type, fields='*', param_filt
         if response.ok:
             resources[resource_type].extend(response.json()[resource_type])
             if resource_type not in["resources"]:
-                resources_id.extend([x['id'] for x in response.json()[resource_type]])
+                resources_id.extend([x['id'] for x in response.json()[resource_type] if "id" in x])
                 if checkIfDuplicates(resources_id):
                     logging.error(f"Duplicates in pagination ({resource_type}) = {[item for item, count in collections.Counter(resources_id).items() if count > 1]}")
             if "pager" not in response.json():
