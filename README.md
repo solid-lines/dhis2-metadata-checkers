@@ -14,7 +14,7 @@
 
 
 # check_authorities_and_userRoles.py
-This script checks the userRoles without any authority associated, the authorities that are declared but there are not used by any userRole, and the authorities used by a userRole that are not declared.
+(2.37 or above) This script checks the userRoles without any authority associated, the authorities that are declared but there are not used by any userRole, and the authorities used by a userRole that are not declared.
 
 # check_customForm_existence.py
 This script checks if custom form is present in a program, a program stage or a dataset (there shouldn't be custom forms in packages and there must not be empty custom forms in packages)
