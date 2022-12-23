@@ -27,5 +27,5 @@ if __name__ == "__main__":
     for resource in metadata_resources[PARENT_RESOURCE]:
         if CHILD_RESOURCE not in resource:
             metadata_url = server_url+PARENT_RESOURCE+"/"+resource["id"]
-            message = "In Program '{resource['program']['name']}' ({resource['program']['id']}), the programIndicator '"+ str(resource["name"]) + "' (" + str(resource["id"]) + ") has not a expression. See "+metadata_url
+            message = f"In Program '{resource['program']['name']}' ({resource['program']['id']}), the programIndicator '{resource['name']}' ({resource['id']}) has not an expression. See {metadata_url}"
             logger.error(message)
