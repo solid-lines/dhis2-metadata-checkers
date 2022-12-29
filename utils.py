@@ -24,7 +24,7 @@ def get_credentials():
     args = credentials_parser.parse_args()
 
     if not args.credentials_name:
-        args.credentials_name = "credentials_clone"
+        args.credentials_name = "credentials_myserver"
     
     # Obtain credentials
     credentials = {}

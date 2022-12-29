@@ -8,7 +8,9 @@
 
 1. RENAME credentials-template.ini to credentials.ini and FILL IN with your information
 2. Watch out!!! the server url MUST follow the pattern "http://SERVER_DOMAIN/api/" (including the trailing slash)
-3. In the python file, select the credentials that you want to use
+3. Select the credentials that you want to use. There are 2 options:
+    1. Use the command line argument `-c` OR `--credentials` to be able to pass the credentials you want to use.
+    2. Edit `utils.py` and change the fixed value of `args.credentials_name` from `"credentials_myserver"` to the desired one.
 4. Run the script
 5. Check the log file
 
