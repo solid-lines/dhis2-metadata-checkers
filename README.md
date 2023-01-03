@@ -33,6 +33,10 @@ This script checks if the aggregation type of the data elements are inline with 
 # check_error_500.py
 This script checks if resource_types the resource "reportTables", "eventReports", "eventCharts", "dashboards", "maps" and "visualizations" (> 2.33) returns a HTTP code 500.
 
+# check_existence_description.py
+This script checks the existence of a description for a particular subset of resource types: programs, dataSets, dataElements, trackedEntityAttributes, trackedEntityTypes, indicators, programIndicators, validationRules, predictors, programRules, visualizations (event chart, event report, map, data visualizer), dashboards
+
+
 # check_expressions.py
 This scripts check if different expressions are well-formed. The expressions are: Indicator (numerator and denominator), Program Indicator (expression and filter), Program Rule (condition -since 2.35-), Program Rule Actions (data expression -since 2.37-) and Predictors (generator data and sampleSkipTest).
 

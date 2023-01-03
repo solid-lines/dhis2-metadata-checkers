@@ -8,6 +8,7 @@ python3 check_de_aggregate_without_dataset.py --credentials=%credentials%
 python3 check_de_ps_pss.py --credentials=%credentials%
 python3 check_de_valuetype_aggregationtype.py --credentials=%credentials%
 python3 check_error_500.py --credentials=%credentials%
+python3 check_existence_description --credentials=%credentials%
 python3 check_expressions.py --credentials=%credentials%
 python3 check_link_programRuleAction_de.py --credentials=%credentials%
 python3 check_link_programRuleAction_tea.py --credentials=%credentials%
