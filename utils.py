@@ -108,7 +108,8 @@ def validate_expression(credentials, resource_type, type_expression, expression)
         
     url_resource = f"{server_url}{resource_type}/{type_expression}/description"
     logging.debug(url_resource)
-    response = requests.post(url_resource, data=expression, auth=HTTPBasicAuth(username, password))
+    headers = {"Content-Type":"text/plain"}
+    response = requests.post(url_resource, data=expression, auth=HTTPBasicAuth(username, password), headers=headers)
     if response.ok:
         if response.json()["status"] == "ERROR":
             return response
