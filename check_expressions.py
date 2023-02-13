@@ -209,9 +209,9 @@ def main():
 
         EXPRESSION_NAME = "rightSide"
         if EXPRESSION_NAME in resource:
-            validation_filter = utils.validate_expression(credentials, RESOURCE_TYPE, "expression",
+            validation_expression = utils.validate_expression(credentials, RESOURCE_TYPE, "expression",
                                                           expression=resource[EXPRESSION_NAME]['expression'])
-            if validation_filter:
+            if validation_expression:
                 logger.error(
                     f"Expression problem. Double check the rightSide expression of the VR '{resource['name']}' ({resource['id']}). Response {validation_expression.json()}")
         else:
