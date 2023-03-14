@@ -148,7 +148,7 @@ def validate_pra_expression(credentials, resource_type, type_expression, program
         
     url_resource = f"{server_url}{resource_type}/{type_expression}/expression/description?programId={program_id}"
     logging.debug(url_resource)
-    response = requests.post(url_resource, data=expression, auth=HTTPBasicAuth(username, password))
+    response = requests.post(url_resource, data=expression.encode('utf-8'), auth=HTTPBasicAuth(username, password))
     if response.ok:
         if response.json()["status"] == "ERROR":
             return response
