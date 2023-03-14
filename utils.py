@@ -159,7 +159,7 @@ def validate_pra_expression(credentials, resource_type, type_expression, program
     else:
         # If response code is not ok (200), print the resulting http error code with description
         logging.error(f"Please, double check this call: {url_resource}")
-        response.raise_for_status()
+        #response.raise_for_status()
 
 def checkIfDuplicates(listOfElems):
     ''' Check if given list contains any duplicates '''
