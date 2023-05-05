@@ -6,6 +6,7 @@ python3 check_authorities_and_userRoles.py --credentials=%credentials%
 python3 check_customForm_existence.py --credentials=%credentials%
 python3 check_de_aggregate_without_dataset.py --credentials=%credentials%
 python3 check_de_ps_pss.py --credentials=%credentials%
+python3 check_de_domain_type.py --credentials=%credentials%
 python3 check_de_valuetype_aggregationtype.py --credentials=%credentials%
 python3 check_error_500.py --credentials=%credentials%
 python3 check_existence_description --credentials=%credentials%

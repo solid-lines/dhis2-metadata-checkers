@@ -24,6 +24,10 @@ This script checks if custom form is present in a program, a program stage or a 
 # check_de_aggregate_without_dataset.py
 This script checks if a data element is NOT associated with any dataSet (i.e. search for dataElements).
 
+# check_de_domain_type.py
+This script checks if there is a dataset that it is linked to a data element with domain type different than AGGREGATE.
+Also, this script checks if there is a program (in fact, program stage) that it is linked to a data element with domain type different than TRACKER.
+
 # check_de_ps_pss.py
 This script checks if the data elements associated to a program stage are used in the program stage instance.
 
