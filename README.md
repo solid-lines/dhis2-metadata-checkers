@@ -40,7 +40,6 @@ This script checks if resource_types the resource "reportTables", "eventReports"
 # check_existence_description.py
 This script checks the existence of a description for a particular subset of resource types: programs, dataSets, dataElements, trackedEntityAttributes, trackedEntityTypes, indicators, programIndicators, validationRules, predictors, programRules, visualizations (event chart, event report, map, data visualizer), dashboards
 
-
 # check_expressions.py
 This scripts check if different expressions are well-formed. The expressions are: Indicator (numerator and denominator), Program Indicator (expression and filter), Program Rule (condition -since 2.35-), Program Rule Actions (data expression -since 2.37-) and Predictors (generator data and sampleSkipTest).
 
@@ -59,17 +58,20 @@ This script checks if the tracked entity attribute associated to a program rule 
 # check_naming_convention.py
 This script checks if the resources follow the best practices of naming convention.
 
+# check_option_code.py
+This script checks if the option codes follows the best practice for codes (compoused by letters-upper/lower case-, digits and the characters '-' and '.'
+
 # check_options_in_filters.py
 This script checks if the options present in the filter of eventCharts and eventReports are valid (comparing them with the current options of the optionSets related to the dataelements referenced in the filter).
 
 # check_options_without_optionSet.py
 This script checks if an option is NOT associated with an optionSet (i.e. search for orphan options).
 
-# check_optionSets_options_and_order.py
-This script checks if each optionSet has at least 2 options associated AND checks if the sortOrder of the options is valid (i.e. starts at 1  and the latest sortOrder value is the size of the list of options)
-
 # check_optionSets_options_and_datatype.py
 This script checks if the datatype of a DE associated to a optionSet is the same than the datatype of the optionSet. Also, it check that the codes of the options in the respective optionSet match the value type of the DE.
+
+# check_optionSets_options_and_order.py
+This script checks if each optionSet has at least 2 options associated AND checks if the sortOrder of the options is valid (i.e. starts at 1  and the latest sortOrder value is the size of the list of options)
 
 # check_organisationUnitOpeningDateAndClosedDate.py
 This script checks if an organization unit has coherent opening and closed dates (i.e. search for closedDate in the future or openingDate later than closedDate)
@@ -121,7 +123,6 @@ This script checks that all names and codes of the options that belongs to an op
 
 # check_uniqueness_orgUnit_orgUnitGroupSet.py
 This script checks that an organisation unit can be member of exactly one of the groups in a group set.
-
 
 Groups and Sets that they are expected to be conformed by more than one element:
 
