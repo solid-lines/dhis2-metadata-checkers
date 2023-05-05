@@ -5,13 +5,20 @@ import os
 def flatten(l):
     return [item for sublist in l for item in sublist]
 
-if __name__ == "__main__":
-
+def main():
     credentials = utils.get_credentials()
     check_name = os.path.basename(__file__).replace(".py", "")
     logger = utils.get_logger(credentials, check_name)
 
-    server_url = credentials["server"]
+
+    # Only since version 2.37
+ 
+    dhis2_version = utils.get_dhis2_version(credentials)
+    dhis2_version_detail = int(dhis2_version.split(".")[1])
+ 
+    if dhis2_version_detail < 37:
+        logger.info(f"Skip authorities & userRoles validation because the dhis2 version instance is lower than 2.37 ({dhis2_version})")
+        return
 
     ############################################################################
 
@@ -48,3 +55,8 @@ if __name__ == "__main__":
                 if a not in authorities_uid:
                     message = f"In userRole '{rar['name']}', the Authority '{a}' is present but it is not declared in systemAuthorities"
                     logger.warning(message)
+
+
+if __name__ == "__main__":
+    main()
+
