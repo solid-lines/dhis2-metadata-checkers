@@ -10,6 +10,8 @@ def main():
     logger = utils.get_logger(credentials, check_name)
     server_url = credentials["server"]
 
+    flag_at_least_one_issue = False
+
     ################################################################################
 
     # since 2.29
@@ -23,6 +25,7 @@ def main():
     except Exception as e:
         logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
         logger.error(e)
+        flag_at_least_one_issue = True
         response[RESOURCE_TYPE] = {}
  
     for resource in response[RESOURCE_TYPE]:
@@ -35,6 +38,7 @@ def main():
         if validation_numerator:
             logger.error(
                 f"Expression problem. Double check the numerator of the I '{resource['name']}' ({resource['id']}). Response {validation_numerator.json()}. See {url_ui}")
+            flag_at_least_one_issue = True
  
         EXPRESSION_NAME = "denominator"
         validation_denominator = utils.validate_expression(credentials, RESOURCE_TYPE, "expression",
@@ -42,6 +46,7 @@ def main():
         if validation_denominator:
             logger.error(
                 f"Expression problem. Double check the denominator of the I '{resource['name']}' ({resource['id']}). Response {validation_denominator.json()}. See {url_ui}")
+            flag_at_least_one_issue = True
  
     ################################################################################
  
@@ -57,6 +62,7 @@ def main():
     except Exception as e:
         logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
         logger.error(e)
+        flag_at_least_one_issue = True
         response[RESOURCE_TYPE] = {}
  
     for resource in response[RESOURCE_TYPE]:
@@ -68,9 +74,11 @@ def main():
             if validation_expression:
                 logger.error(
                     f"Expression problem. Program '{resource['program']['name']}' ({resource['program']['id']}). Double check the expression of the PI '{resource['name']}' ({resource['id']}). Response {validation_expression.json()}")
+                flag_at_least_one_issue = True
         else:
             logger.error(
                 f"PI 'Program '{resource['program']['name']}' ({resource['program']['id']}). {resource['name']}' ({resource['id']}) without expression")
+            flag_at_least_one_issue = True
  
         EXPRESSION_NAME = "filter"
         if EXPRESSION_NAME in resource:
@@ -79,6 +87,7 @@ def main():
             if validation_filter:
                 logger.error(
                     f"Expression problem. Program '{resource['program']['name']}' ({resource['program']['id']}). Double check the filter of the PI '{resource['name']}' ({resource['id']}). Response {validation_filter.json()}")
+                flag_at_least_one_issue = True
  
     ################################################################################
 
@@ -100,6 +109,7 @@ def main():
         except Exception as e:
             logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
             logger.error(e)
+            flag_at_least_one_issue = True
             response[RESOURCE_TYPE] = {}
  
         for resource in response[RESOURCE_TYPE]:
@@ -110,6 +120,7 @@ def main():
             if validation_condition:
                 logger.error(
                     f"Expression problem. Program '{resource['program']['name']}' ({resource['program']['id']}). Double check the {EXPRESSION_NAME} of the PR '{resource['name']}' ({resource['id']}). Response {validation_condition.json()}")
+                flag_at_least_one_issue = True
     else:
         logger.info(
             f"Skip Program Rules validation because the dhis2 version instance is lower than 2.35 ({dhis2_version})")
@@ -130,6 +141,7 @@ def main():
         except Exception as e:
             logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
             logger.error(e)
+            flag_at_least_one_issue = True
             response[RESOURCE_TYPE] = {}
 
         for resource in response[RESOURCE_TYPE]:
@@ -141,6 +153,7 @@ def main():
                 if validation_rule_action is not None:
                     logger.error(
                         f"Expression problem. Program '{resource['programRule']['program']['name']}' ({resource['programRule']['program']['id']}). Double check the PRA ({resource['id']}) of PR '{resource['programRule']['name']}' ({resource['programRule']['id']}). Response {validation_rule_action.json()}")
+                    flag_at_least_one_issue = True
 
     else:
         logger.info(
@@ -161,6 +174,7 @@ def main():
     except Exception as e:
         logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
         logger.error(e)
+        flag_at_least_one_issue = True
         response[RESOURCE_TYPE] = {}
 
     for resource in response[RESOURCE_TYPE]:
@@ -170,6 +184,7 @@ def main():
         if validation_expression_generator:
             logger.error(
                 f"Expression problem. Double check the generator {EXPRESSION_NAME} of the Predictor '{resource['name']}' ({resource['id']}). Response {validation_expression_generator.json()}")
+            flag_at_least_one_issue = True
 
         if "sampleSkipTest" in resource:
             validation_expression_sampleSkipTest = utils.validate_expression(credentials, RESOURCE_TYPE, "expression",
@@ -178,6 +193,7 @@ def main():
             if validation_expression_sampleSkipTest:
                 logger.error(
                     f"Expression problem. Double check the sampleSkipTest {EXPRESSION_NAME} of the Predictor '{resource['name']}' ({resource['id']}). Response {validation_expression_sampleSkipTest.json()}")
+                flag_at_least_one_issue = True
 
     ################################################################################
 
@@ -193,6 +209,7 @@ def main():
     except Exception as e:
         logger.error(f"Error while processing resource type: {RESOURCE_TYPE}")
         logger.error(e)
+        flag_at_least_one_issue = True
         response[RESOURCE_TYPE] = {}
 
     for resource in response[RESOURCE_TYPE]:
@@ -204,8 +221,10 @@ def main():
             if validation_expression:
                 logger.error(
                     f"Expression problem. Double check the leftSide expression of the VR '{resource['name']}' ({resource['id']}). Response {validation_expression.json()}")
+                flag_at_least_one_issue = True
         else:
             logger.error(f"VR '{resource['name']}' ({resource['id']}) without leftSide expression")
+            flag_at_least_one_issue = True
 
         EXPRESSION_NAME = "rightSide"
         if EXPRESSION_NAME in resource:
@@ -214,8 +233,15 @@ def main():
             if validation_expression:
                 logger.error(
                     f"Expression problem. Double check the rightSide expression of the VR '{resource['name']}' ({resource['id']}). Response {validation_expression.json()}")
+                flag_at_least_one_issue = True
         else:
             logger.error(f"VR '{resource['name']}' ({resource['id']}) without rightSide expression")
+            flag_at_least_one_issue = True
+
+    ################################################################################
+
+    if flag_at_least_one_issue:
+        exit(1)  # exit unsuccessfully
 
 
 if __name__ == "__main__":
