@@ -124,6 +124,10 @@ This script checks that all names and codes of the options that belongs to an op
 # check_uniqueness_orgUnit_orgUnitGroupSet.py
 This script checks that an organisation unit can be member of exactly one of the groups in a group set.
 
+# check_visualizations_with_empty_dataDimensionItems.py
+This script checks if a visualization has empty data dimension items (that shouldn't be).
+
+
 Groups and Sets that they are expected to be conformed by more than one element:
 
 * programIndicatorGroups: programIndicators
