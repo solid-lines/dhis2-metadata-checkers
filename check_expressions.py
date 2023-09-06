@@ -117,10 +117,12 @@ def main():
             validation_condition = utils.validate_pr_expression(credentials, RESOURCE_TYPE, EXPRESSION_NAME,
                                                                 program_id=resource['program']['id'],
                                                                 expression=resource[EXPRESSION_NAME])
-            if validation_condition:
-                logger.error(
-                    f"Expression problem. Program '{resource['program']['name']}' ({resource['program']['id']}). Double check the {EXPRESSION_NAME} of the PR '{resource['name']}' ({resource['id']}). Response {validation_condition.json()}")
-                flag_at_least_one_issue = True
+            if validation_condition is not None:
+                if "0 error(s)" in validation_condition.json()["description"]:
+                    logger.warn(f"Expression problem. Program '{resource['program']['name']}' ({resource['program']['id']}). Double check the {EXPRESSION_NAME} of the PR '{resource['name']}' ({resource['id']}). Response {validation_condition.json()}")
+                else:
+                    logger.error(f"Expression problem. Program '{resource['program']['name']}' ({resource['program']['id']}). Double check the {EXPRESSION_NAME} of the PR '{resource['name']}' ({resource['id']}). Response {validation_condition.json()}")
+                    flag_at_least_one_issue = True
     else:
         logger.info(
             f"Skip Program Rules validation because the dhis2 version instance is lower than 2.35 ({dhis2_version})")
@@ -151,9 +153,11 @@ def main():
                                                                        program_id=resource['programRule']['program'][
                                                                            'id'], expression=resource[EXPRESSION_NAME])
                 if validation_rule_action is not None:
-                    logger.error(
-                        f"Expression problem. Program '{resource['programRule']['program']['name']}' ({resource['programRule']['program']['id']}). Double check the PRA ({resource['id']}) of PR '{resource['programRule']['name']}' ({resource['programRule']['id']}). Response {validation_rule_action.json()}")
-                    flag_at_least_one_issue = True
+                    if "0 error(s)" in validation_rule_action.json()["description"]:
+                        logger.warn(f"Expression problem. Program '{resource['programRule']['program']['name']}' ({resource['programRule']['program']['id']}). Double check the PRA ({resource['id']}) of PR '{resource['programRule']['name']}' ({resource['programRule']['id']}). Response {validation_rule_action.json()}")
+                    else:
+                        logger.error(f"Expression problem. Program '{resource['programRule']['program']['name']}' ({resource['programRule']['program']['id']}). Double check the PRA ({resource['id']}) of PR '{resource['programRule']['name']}' ({resource['programRule']['id']}). Response {validation_rule_action.json()}")
+                        flag_at_least_one_issue = True
 
     else:
         logger.info(
