@@ -98,7 +98,10 @@ This script checks if a program rule has a condition.
 This script checks if a program rule has at least one program rule action.
 
 # check_programRuleVariable_name.py
-This script checks if a program rule variable has not "and", "or" or "not" in its name 
+This script checks if a program rule variable has not "and", "or" or "not" in its name
+
+# check_programRuleVariable_unused.py
+This script checks if program rule variables (PRVs) in a DHIS2 instance that are not being used by any program rule (condition) or program rule action.
 
 # check_programs_without_programStages.py
 This script checks if a program (event/tracker) has at least one programStage (i.e. search for programs without programStages).
