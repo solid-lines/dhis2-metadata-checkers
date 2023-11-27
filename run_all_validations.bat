@@ -35,6 +35,7 @@ python3 check_programs_without_programStages.py --credentials=%credentials%
 python3 check_programStages_without_program.py --credentials=%credentials%
 python3 check_programStageSections_without_programStage.py --credentials=%credentials%
 python3 check_programsWithoutRegistration_with_TE_type.py --credentials=%credentials%
+python3 check_sharesettings_no_public_no_usergroups.py --credentials=%credentials%
 python3 check_size_groups_and_sets.py --credentials=%credentials%
 python3 check_uniqueness_name.py --credentials=%credentials%
 python3 check_uniqueness_options_in_optionSet.py --credentials=%credentials%

@@ -115,6 +115,9 @@ This script checks if a programStageSection is NOT associated with a programStag
 # check_programsWithoutRegistration_with_TE_type.py
 This script checks if a program without registration (event program) is associated (unexpectedly) to a Tracked Entity Type.
 
+# check_sharesettings_no_public_no_usergroups.py
+This script checks if a set of resources (DE, TEA, datasets and programs) is not public shared and it does not have any userGroup associated.
+
 # check_size_groups_and_sets.py
 This script checks the number of elements that are part of a group or a set, raising an error if the number is unexpected (like groups conformed by one element).
 
