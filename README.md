@@ -52,7 +52,7 @@ This script checks if the tracked entity attribute associated to a program rule 
 # check_link_programRuleVariable_de.py
 This script checks if the data element associated to a program rule variable exists and belongs to the program that the program rule is associated to.
 
-# check_link_programRuleVariable_de.py
+# check_link_programRuleVariable_tea.py
 This script checks if the tracked entity attribute associated to a program rule variable exists and belongs to the program (or the tracked entity type) that the program rule is associated to.
 
 # check_naming_convention.py
