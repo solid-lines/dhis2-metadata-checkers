@@ -30,6 +30,7 @@ python3 check_programRules_evaluation_texts.py --credentials=%credentials%
 python3 check_programRules_without_condition.py --credentials=%credentials%
 python3 check_programRules_without_programRuleActions.py --credentials=%credentials%
 python3 check_programRuleVariable_name.py --credentials=%credentials%
+python3 check_programRuleVariable_unlink.py --credentials=%credentials%
 python3 check_programRuleVariable_unused.py --credentials=%credentials%
 python3 check_programs_without_programStages.py --credentials=%credentials%
 python3 check_programStages_without_program.py --credentials=%credentials%

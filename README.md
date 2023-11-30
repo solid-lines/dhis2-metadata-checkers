@@ -100,6 +100,9 @@ This script checks if a program rule has at least one program rule action.
 # check_programRuleVariable_name.py
 This script checks if a program rule variable has not "and", "or" or "not" in its name
 
+# check_programRuleVariable_unlink.py
+This script checks if program rule variables (with source type DATAELEMENT_ or TEI_ATTRIBUTE) are linked to a DE or a TEA.
+
 # check_programRuleVariable_unused.py
 This script checks if program rule variables (PRVs) in a DHIS2 instance that are not being used by any program rule (condition) or program rule action.
 
