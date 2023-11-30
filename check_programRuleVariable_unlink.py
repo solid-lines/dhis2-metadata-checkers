@@ -24,8 +24,8 @@ if __name__ == "__main__":
     # printing the log with the results
     for variable in prv_de["programRuleVariables"]:
         message = f"The Program Rule Variable '{variable['name']}' ({variable['id']}), present in the program '{variable['program']['name']}' ({variable['program']['id']}) with program Rule variable Source Type '{variable['programRuleVariableSourceType']}' has no dataElement associated."
-        logger.warning(message)
+        logger.error(message)
 
     for variable in prv_tei["programRuleVariables"]:
         message = f"The Program Rule Variable '{variable['name']}' ({variable['id']}), present in the program '{variable['program']['name']}' ({variable['program']['id']}) with program Rule variable Source Type '{variable['programRuleVariableSourceType']}' has no trackedEntityAttribute associated."
-        logger.warning(message)
+        logger.error(message)
