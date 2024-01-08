@@ -124,6 +124,9 @@ This script checks if a set of resources (DE, TEA, datasets and programs) is not
 # check_size_groups_and_sets.py
 This script checks the number of elements that are part of a group or a set, raising an error if the number is unexpected (like groups conformed by one element).
 
+# check_translations.py
+This script checks if translations are valid. For instance, it checks if there is one only translation per property and locale (e.g. a DE has only one translation for 'description' property in 'es' locale).
+
 # check_uniqueness_name.py
 This script checks if more than one resource of a particular type has the same name (configurable as name, shortname, formname) for the same locale.  
 
