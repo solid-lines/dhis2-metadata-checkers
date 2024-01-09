@@ -109,6 +109,9 @@ This script checks if program rule variables (PRVs) in a DHIS2 instance that are
 # check_programs_without_programStages.py
 This script checks if a program (event/tracker) has at least one programStage (i.e. search for programs without programStages).
 
+# check_programSections_tea.py
+This script checks if all TEAs that belongs to a programSection are linked to the program that the programSection belongs to.
+
 # check_programStages_without_program.py
 This script checks if a programStage is NOT associated with a program (i.e. search for orphan programStage).
 

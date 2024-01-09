@@ -33,6 +33,7 @@ python3 check_programRuleVariable_name.py --credentials=%credentials%
 python3 check_programRuleVariable_unlink.py --credentials=%credentials%
 python3 check_programRuleVariable_unused.py --credentials=%credentials%
 python3 check_programs_without_programStages.py --credentials=%credentials%
+python3 check_programSections_tea.py --credentials=%credentials%
 python3 check_programStages_without_program.py --credentials=%credentials%
 python3 check_programStageSections_without_programStage.py --credentials=%credentials%
 python3 check_programsWithoutRegistration_with_TE_type.py --credentials=%credentials%
