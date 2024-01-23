@@ -24,7 +24,7 @@ def main():
 
     # UserRoles without any authority associated
     userRoles_without_authorities = utils.get_resources_from_online(credentials=credentials, resource_type="userRoles", fields="id,name", param_filter="filter=authorities:eq:0")
-    if userRoles_without_authorities:
+    if userRoles_without_authorities["userRoles"]:
         message = f'{len(userRoles_without_authorities["userRoles"])} User Roles do not have assigned any authority: {userRoles_without_authorities["userRoles"]}'
         logger.warning(message)
 
