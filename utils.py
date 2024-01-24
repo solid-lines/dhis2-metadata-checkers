@@ -196,7 +196,8 @@ def get_resources_from_online(credentials, resource_type, fields='*', param_filt
                 if checkIfDuplicates(resources_id):
                     logging.error(f"Duplicates in pagination ({resource_type}) [page={page}] = {[item for item, count in collections.Counter(resources_id).items() if count > 1]}")
             if "pager" not in response.json():
-                logging.warning(f"{resource_type} does not return a pager")
+                if resource_type !="schemas":
+                    logging.warning(f"{resource_type} does not return a pager")
                 data_to_query = False
             elif "nextPage" not in response.json()["pager"]:
                 data_to_query = False
