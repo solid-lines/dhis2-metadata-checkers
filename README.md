@@ -46,6 +46,12 @@ This scripts check if different expressions are well-formed. The expressions are
 # check_link_programRuleAction_de.py
 This script checks if the data element associated to a program rule action belongs to the program that the program rule is associated to.
 
+# check_link_programRuleAction_hideoption.py
+This script checks if the option to be hidden belongs to the optionSet of DE/TEA selected in the program rule. Also, it checks if an unexpected extra field "optionGroup" appears in the PRA.
+
+# check_link_programRuleAction_hideoptiongroup.py
+This script checks if the optionSet of the optiongroup to be hidden is the same than the optionSet of DE/TEA selected in the program rule. Also, it checks if an unexpected extra field "option" appears in the PRA.
+
 # check_link_programRuleAction_tea.py
 This script checks if the tracked entity attribute associated to a program rule action belongs to the program (or the tracked entity type) that the program rule is associated to.
 
