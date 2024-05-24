@@ -65,7 +65,7 @@ This script checks if the tracked entity attribute associated to a program rule 
 This script checks if the resources follow the best practices of naming convention.
 
 # check_option_code.py
-This script checks if the option codes follows the best practice for codes (compoused by letters-upper/lower case-, digits and the characters '-' and '.'
+This script checks if the option codes follows the best practice for codes (compoused by letters (upper/lower case), digits and special characters ('-', '_', '|' and '.').
 
 # check_options_in_filters.py
 This script checks if the options present in the filter of eventCharts and eventReports are valid (comparing them with the current options of the optionSets related to the dataelements referenced in the filter).
