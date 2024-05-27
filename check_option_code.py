@@ -6,8 +6,8 @@ import os
 import re
 
 
-PATTERN_CODE = re.compile("^([a-zA-Z0-9\_\|\-\.]+)+$") # upper and lower case letters, digits, '_', '|', '-', '.'
-#PATTERN_CODE = re.compile("^([0-9A-Z_\|\-\.]+)+$") # upper case, _ , -, |
+PATTERN_CODE = re.compile("^([a-zA-Z0-9\_\|\-\.])+$") # upper and lower case letters, digits, '_', '|', '-', '.'
+#PATTERN_CODE = re.compile("^([0-9A-Z_\|\-\.])+$") # upper case, _ , -, |
 
 def is_valid_code(code):
     return PATTERN_CODE.search(code)
