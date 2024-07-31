@@ -14,7 +14,17 @@ if __name__ == "__main__":
     
     ############################################################################
 
-    resource_types = ["reportTables", "eventReports", "eventCharts", "dashboards", "maps", "visualizations"] #visualizations in > 2.33
+    resource_types = ["eventReports", "eventCharts", "dashboards", "maps"]
+
+    dhis2_version = utils.get_dhis2_version(credentials)
+    dhis2_version_detail = int(dhis2_version.split(".")[1])
+
+    if dhis2_version_detail >= 35:
+        resource_types.append("visualizations")
+
+    if dhis2_version_detail < 38:
+        resource_types.append("reportTables")
+
     for resource_type in resource_types:
         #retrieve all metadata_resources
         response = utils.get_resources_from_online(credentials=credentials, resource_type=resource_type, fields='id,name', param_filter=None)
@@ -23,5 +33,5 @@ if __name__ == "__main__":
 
             r = utils.check_OK(credentials, metadata_url)
             if not r["valid"]:
-                message = f"The {resource_type} '{resource['name']}' ({resource['id']}) returns  {r['response'].json()}. See {metadata_url}"
+                message = f"The {resource_type} '{resource['name']}' ({resource['id']}) returns {r['response'].json()}. See {metadata_url}"
                 logger.error(message)
