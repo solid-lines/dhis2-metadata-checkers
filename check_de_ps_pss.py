@@ -34,6 +34,8 @@ if __name__ == "__main__":
         
         url_ui = utils.get_url_maintenance(server_url, "programs", program_uid)
 
+        for x in (a.difference(b)):
+            logger.error(f"The DE ({x}) is assigned to this Program Stage but it is not included in any Program Stage Section. Check the programStage '{programStage_name}' ({programStage_uid}) of the program '{program_name}' ({program_uid}). See {url_ui}")
 
-        if a != b:
-            logger.warning(f"The DE assigned to this Program Stage is not included in the program Stage Section. Check the programStage '{programStage_name}' ({programStage_uid}) of the program '{program_name}' ({program_uid}). See {url_ui}")
+        for x in (b.difference(a)):
+            logger.error(f"The DE ({x}) is NOT assigned to this Program Stage but it is included in a Program Stage Section. Check the programStage '{programStage_name}' ({programStage_uid}) of the program '{program_name}' ({program_uid}). See {url_ui}")
