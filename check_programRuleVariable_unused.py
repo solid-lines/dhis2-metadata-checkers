@@ -29,13 +29,15 @@ if __name__ == "__main__":
         used_in_program_rule_actions = []
         for program_rule in pr_resources["programRules"]:
             condition = program_rule.get("condition", "")
-            if re.search(r"#\{" + re.escape(resource["name"]) + r"}", condition) or re.search(r"A\{" + re.escape(resource["name"]) + r"}", condition):
+            if re.search(r"#\{" + re.escape(resource["name"]) + r"}", condition) or re.search(r"'" + re.escape(resource["name"]) + r"'", condition) or re.search(r"A\{" + re.escape(resource["name"]) + r"}", condition):
                 used_in_program_rules.append(program_rule)
 
             for program_rule_action in program_rule["programRuleActions"]:
                 data_field = program_rule_action.get("data", "")
                 content_field = program_rule_action.get("content", "")
                 if re.search(r"#\{" + re.escape(resource["name"]) + r"}", data_field) or re.search(r"#\{" + re.escape(resource["name"]) + r"}", content_field) or re.search(r"A\{" + re.escape(resource["name"]) + r"}", data_field) or re.search(r"A\{" + re.escape(resource["name"]) + r"}", content_field):
+                    used_in_program_rule_actions.append(program_rule_action)
+                if re.search(r"'" + re.escape(resource["name"]) + r"'", data_field) or re.search(r"'" + re.escape(resource["name"]) + r"'", content_field) :
                     used_in_program_rule_actions.append(program_rule_action)
 
         # If not used, add information to the rows list and log a warning message
