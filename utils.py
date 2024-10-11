@@ -182,7 +182,7 @@ def get_resources_from_online(credentials, resource_type, fields='*', param_filt
     data_to_query = True
     while data_to_query:
         page += 1
-        url_resource = f"{server_url}{resource_type}?fields={fields}&pageSize={pagesize}&format=json&order=created:DESC,name:ASC&skipMeta=true&format=json&page={page}"
+        url_resource = f"{server_url}{resource_type}?fields={fields}&pageSize={pagesize}&format=json&order=created:DESC,lastUpdated:DESC,name:ASC&skipMeta=true&format=json&page={page}"
         if param_filter:
             url_resource = url_resource + "&" + param_filter
 
