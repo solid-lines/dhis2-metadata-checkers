@@ -88,6 +88,10 @@ This script looks for optionSets that are not used in the system (neither in DE 
 # check_PR_PI_program_stage_name.py
 This script checks the use of "program_stage_name" (due to issues if the stage name is translated) in PR expression, PRA exression, PI expression, PI filter. 
 
+# check_programIndicators_aggregateExchange.py
+This script checks if a program indicator is correctly linked to the DE and COC used for the Tracker2Aggregate approach (See dhis2 documentation about "Integrating tracker and aggregate data").
+This script is using the custom attribute `vudyDP7jUy5` for linking the PI and the DE.
+
 # check_programIndicators_without_expression.py
 This script checks if a program indicator has a expression.
 
