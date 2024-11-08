@@ -29,7 +29,7 @@ This script checks if there is a dataset that it is linked to a data element wit
 Also, this script checks if there is a program (in fact, program stage) that it is linked to a data element with domain type different than TRACKER.
 
 # check_de_ps_pss.py
-This script checks if the data elements associated to a program stage are used in the program stage instance.
+This script checks if the data elements associated to a program stage are used in the program stage section AND if data elements that are NOT associated to the program stage are present in a program stage section.
 
 # check_de_valuetype_aggregationtype.py
 This script checks if the aggregation type of the data elements are inline with the expected values.
