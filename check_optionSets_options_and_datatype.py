@@ -4,14 +4,14 @@
 import utils
 import os
 
-def code_compatible(value, valueType):
+def code_compatible(option_code, de_valuetype):
 
-    if valueType=="TEXT" or valueType=="LONG_TEXT":
+    if de_valuetype in ("TEXT", "LONG_TEXT", "MULTI_TEXT"):
         return True
 
     # TODO: add float support
-    if valueType=="NUMBER" or valueType=="INTEGER" or valueType=="INTEGER_ZERO_OR_POSITIVE" or valueType=="INTEGER_POSITIVE":
-        if value.isdigit():
+    if de_valuetype=="NUMBER" or de_valuetype=="INTEGER" or de_valuetype=="INTEGER_ZERO_OR_POSITIVE" or de_valuetype=="INTEGER_POSITIVE":
+        if option_code.isdigit():
             return True
 
     return False
@@ -34,18 +34,18 @@ if __name__ == "__main__":
     metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=PARENT_RESOURCE, fields=fields, param_filter="filter=optionSetValue:eq:true")
 
     for dataElement in metadata_resources[PARENT_RESOURCE]:
-        metadata_url = server_url+PARENT_RESOURCE+"/"+dataElement["id"]+"?fields="+fields
+        metadata_url = f"{server_url}{PARENT_RESOURCE}/{dataElement['id']}?fields={fields}"
         
         de_valuetype = dataElement["valueType"]
         optionSet = dataElement["optionSet"]
 
-        if de_valuetype != dataElement["optionSet"]["valueType"]:
+        if de_valuetype == "MULTI_TEXT" and optionSet["valueType"] == "TEXT":
+            pass
+        elif de_valuetype != optionSet["valueType"]:
             message = f"The dataElement '{dataElement['name']}' ({dataElement['id']}) value type ({dataElement['valueType']}) is different than the value type ({optionSet['valueType']}) of the optionSet '{optionSet['name']}' ({optionSet['id']}). See {metadata_url}"
             logger.warn(message)
-
         
-        
-        for option in dataElement["optionSet"]["options"]:
+        for option in optionSet["options"]:
             if not code_compatible(option["code"], de_valuetype):
-                message = f"The dataElement '{dataElement['name']}' ({dataElement['id']}) value type ({dataElement['valueType']}) doesn't match the option code value ({option['code']}) of the optionSet '{optionSet['name']}' ({optionSet['id']}). See {metadata_url}"
+                message = f"The dataElement '{dataElement['name']}' ({dataElement['id']}) value type ({dataElement['valueType']}) doesn't match the value type of the option code value ({option['code']}) of the optionSet '{optionSet['name']}' ({optionSet['id']}). See {metadata_url}"
                 logger.warn(message)
