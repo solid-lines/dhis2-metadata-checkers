@@ -77,7 +77,7 @@ This script checks if an option is NOT associated with an optionSet (i.e. search
 This script checks if the datatype of a DE associated to a optionSet is the same than the datatype of the optionSet. Also, it check that the codes of the options in the respective optionSet match the value type of the DE.
 
 # check_optionSets_options_and_order.py
-This script checks if each optionSet has at least 2 options associated AND checks if the sortOrder of the options is valid (i.e. starts at 1  and the latest sortOrder value is the size of the list of options)
+This script checks if each optionSet has at least 2 options associated AND checks if the sortOrder of the options is valid (i.e. starts at 0 or 1 (in a dhis2 instance, optionSets with different start sort order value can coexist), the latest sortOrder value is the size of the list of options)
 
 # check_organisationUnitOpeningDateAndClosedDate.py
 This script checks if an organization unit has coherent opening and closed dates (i.e. search for closedDate in the future or openingDate later than closedDate)

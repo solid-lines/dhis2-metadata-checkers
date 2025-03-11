@@ -4,6 +4,10 @@
 import utils
 import os
 
+def log_error(optionSet, metadata_url, logger):
+    """Logs an error message for invalid sort order."""
+    message = f"The optionSet '{optionSet['name']}' ({optionSet['id']}) has errors in the sortOrder. See {metadata_url}"
+    logger.error(message)
 
 if __name__ == "__main__":
 
@@ -29,14 +33,21 @@ if __name__ == "__main__":
 
         #check condition
         #check if each optionSet has at least 2 options
-        if (size <=1):
+        if (size <= 1):
             message = "The optionSet '"+ str(optionSet["name"]) + "' (" + str(optionSet["id"]) + ") has one or less options. See "+metadata_url
             logger.error(message)
+        elif len(sortOrders) != size:
+            log_error(optionSet, metadata_url, logger)
         else:
-            #check condition
-            #check if the sortOrder of the options is valid (starts at 1 + latest has the value of the size of the optionList).
-            if (size == len(sortOrders)) and (sortOrders[0] == 1) and (sortOrders[size - 1] == size):
-                pass # Everything is OK
+            first_sortOrder = sortOrders[0]
+
+            # Check if the sortOrder of the options is valid (it could starts at 0 or 1. They could coexist in the same instance)
+            # Check if the sortOrder of the options is valid: latest has the value of the size of the optionList).
+            if first_sortOrder == 0:
+                if (sortOrders[size - 1] != size - 1):
+                    log_error(optionSet, metadata_url, logger)
+            elif first_sortOrder == 1:
+                if (sortOrders[size - 1] != size):
+                    log_error(optionSet, metadata_url, logger)
             else:
-                message = "The optionSet '"+ str(optionSet["name"]) + "' (" + str(optionSet["id"]) + ") has errors in the sortOrder. See "+metadata_url
-                logger.error(message)
+                log_error(optionSet, metadata_url, logger)
