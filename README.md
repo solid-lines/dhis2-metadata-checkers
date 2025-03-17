@@ -95,6 +95,9 @@ This script is using the custom attribute `vudyDP7jUy5` for linking the PI and t
 # check_programIndicators_without_expression.py
 This script checks if a program indicator has a expression.
 
+# check_programRuleActions_duplicate.py
+This script checks if in a program rule variable there are progrm rule actions duplicated.
+
 # check_programRules_boolean.py
 This script checks if the program rule variable that appears in '!#{prv}' has boolean/true_only type. 
 

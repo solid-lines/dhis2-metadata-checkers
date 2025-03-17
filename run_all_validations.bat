@@ -28,6 +28,7 @@ python3 check_orphan_optionSets.py --credentials=%credentials%
 python3 check_PR_PI_program_stage_name.py --credentials=%credentials%
 python3 check_programIndicators_aggregateExchange.py --credentials=%credentials%
 python3 check_programIndicators_without_expression.py --credentials=%credentials%
+python3 check_programRuleActions_duplicate.py --credentials=%credentials%
 python3 check_programRules_boolean.py --credentials=%credentials%
 python3 check_programRules_evaluation_texts.py --credentials=%credentials%
 python3 check_programRules_without_condition.py --credentials=%credentials%
