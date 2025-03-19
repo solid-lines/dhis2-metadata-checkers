@@ -26,5 +26,5 @@ if __name__ == "__main__":
     for program in metadata_resources[PARENT_RESOURCE]:
         if CHILD_RESOURCE in program:
             metadata_url = server_url+PARENT_RESOURCE+"/"+program["id"]
-            message = "The event (without registration) program  "+ str(program["name"]) + "' (" + str(program["id"]) + ") is associated to a Tracked Entity Type. See "+metadata_url
+            message = f"The event (without registration) program '{program['name']}' ({program['id']}) is associated to a Tracked Entity Type. See {metadata_url}"
             logger.error(message)
