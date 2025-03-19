@@ -203,6 +203,7 @@ def get_resources_from_online(credentials, resource_type, fields='*', param_filt
                 data_to_query = False
         else:
             # If response code is not ok (200), print the resulting http error code with description
+            logging.error(f"Please, double check this call: {url_resource}. Response code: {response.status_code}. Response: {response.text}")
             response.raise_for_status()
 
     return resources
