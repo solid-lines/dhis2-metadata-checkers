@@ -18,7 +18,6 @@ if __name__ == "__main__":
     groups = {
         "programIndicatorGroups": "programIndicators",
         "dataElementGroups" : "dataElements",
-        "programTrackedEntityAttributeGroups": "programTrackedEntityAttributes",
         "indicatorGroups" : "indicators",
         "validationRuleGroups" : "validationRules",
         "predictorGroups": "predictors",
@@ -38,8 +37,13 @@ if __name__ == "__main__":
         "dataSets": "dataSetElements",
        # "colorSets": "colors",
         "optionGroupSets": "optionGroups"
-        }
-    
+    }
+
+    # programTrackedEntityAttributeGroups removed since 2.40
+    dhis2_version = utils.get_dhis2_version(credentials)
+    dhis2_version_detail = int(dhis2_version.split(".")[1])
+    if dhis2_version_detail < 40:
+        groups["programTrackedEntityAttributeGroups"] = "programTrackedEntityAttributes"
     
     for k,v in groups.items():
         #retrieve all metadata_resources
