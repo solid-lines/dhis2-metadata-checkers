@@ -39,7 +39,7 @@ if __name__ == "__main__":
     ############################################################################    
 
     # Retrieve all program rules
-    pr_resources = utils.get_resources_from_online(credentials=credentials, resource_type="programRules", fields="id,name,programRuleActions[programRuleActionType,content,data,dataElement,trackedEntityDataValue,programStageSection,trackedEntityAttribute,messageTemplate,programStage]", param_filter=None)
+    pr_resources = utils.get_resources_from_online(credentials=credentials, resource_type="programRules", fields="id,name,programRuleActions[programRuleActionType,content,data,dataElement,trackedEntityDataValue,programStageSection,trackedEntityAttribute,messageTemplate,programStage,option]", param_filter=None)
     
     for resource in pr_resources["programRules"]:
         pras = resource["programRuleActions"]        
