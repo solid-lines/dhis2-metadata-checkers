@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     for resource_type in resource_types:
         # retrieve all metadata_resources
-        resources = utils.get_resources_from_online(credentials=credentials, resource_type=resource_type, fields="id,name,created,lastUpdated", param_filter="filter=userGroupAccesses:empty&filter=sharing.public:eq:--------")
+        resources = utils.get_resources_from_online(credentials=credentials, resource_type=resource_type, fields="id,name,created,lastUpdated", param_filter="filter=sharing.userGroups:empty&filter=sharing.public:eq:--------")
 
         for r in resources[resource_type]:
             message = f"The {resource_type} '{r['name']}' ({r['id']}) is not public shared and it does not have any userGroup associated."
