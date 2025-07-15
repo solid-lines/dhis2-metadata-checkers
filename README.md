@@ -111,7 +111,7 @@ This script checks if a program rule has a condition.
 This script checks if a program rule has at least one program rule action.
 
 # check_programRuleVariable_name.py
-This script checks if a program rule variable has not "and", "or" or "not" in its name
+This script checks if a program rule variable has not "and", "or" or "not" in its name. Also checks if the PRV name contains unexecpted characters. And also checks if there are PRV names duplicated for the same program
 
 # check_programRuleVariable_unlink.py
 This script checks if program rule variables (with source type DATAELEMENT_ or TEI_ATTRIBUTE) are linked to a DE or a TEA.

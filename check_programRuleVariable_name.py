@@ -4,7 +4,7 @@
 import utils
 import os
 import re
-
+from collections import Counter
 
 if __name__ == "__main__":
 
@@ -21,9 +21,14 @@ if __name__ == "__main__":
 
     #retrieve all metadata_resources
     metadata_resources = utils.get_resources_from_online(credentials=credentials, resource_type=RESOURCE_TYPE, fields="id,name,program[name,id]", param_filter=None)
-    
-    for resource in metadata_resources[RESOURCE_TYPE]:
+
+    all_prv = list()
         
+    for resource in metadata_resources[RESOURCE_TYPE]:
+
+        # Creating a tuple (program_name, program_id, prv_name)
+        all_prv.append((resource['program']['name'], resource['program']['id'], resource["name"]))
+
         forbidden = ["and", "or", "not"] # (dhis version >= 2.34)
         #update for inicio de linea y fin de linea
 
@@ -38,3 +43,9 @@ if __name__ == "__main__":
             metadata_url = server_url+RESOURCE_TYPE+"/"+resource["id"]
             message = f"In Program '{resource['program']['name']}' ({resource['program']['id']}), the PRV {resource['name']} ({resource['id']}) contains unexpected characters. See {metadata_url}"
             logger.error(message)
+
+
+    prv_name_dup = [k for k,count in Counter(all_prv).items() if count > 1]
+    for prv in prv_name_dup:
+        message = f"In Program '{prv[0]}' ({prv[1]}), there are more than one PRV with the same name '{prv[2]}'."
+        logger.error(message)
