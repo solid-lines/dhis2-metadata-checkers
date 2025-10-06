@@ -32,7 +32,7 @@ Also, this script checks if there is a program (in fact, program stage) that it 
 This script checks if the data elements associated to a program stage are used in the program stage section AND if data elements that are NOT associated to the program stage are present in a program stage section.
 
 # check_de_valuetype_aggregationtype.py
-This script checks if the aggregation type of the data elements are inline with the expected values.
+This script checks if the aggregation type of the data elements are inline with the expected values. 'None' is expected for: "Text", "Long text", "Letter", "Phone number", "Email", "Date", "Date and time", "Time", "Number", "Tracker associate", "Username", "Coordinate", "Organisation unit", "Reference", "Age", "URL", "File", "Image", "GeoJSON".
 
 # check_error_500.py
 This script checks if resource_types the resource "reportTables", "eventReports", "eventCharts", "dashboards", "maps" and "visualizations" (> 2.33) returns a HTTP code 500.

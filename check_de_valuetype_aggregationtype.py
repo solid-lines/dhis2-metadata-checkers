@@ -25,6 +25,6 @@ if __name__ == "__main__":
     for resource in metadata_resources[PARENT_RESOURCE]:
         url_api = utils.get_url_api(server_url, PARENT_RESOURCE, resource["id"])
         url_ui = utils.get_url_maintenance(server_url, PARENT_RESOURCE, resource["id"])
-        if resource["valueType"] in ["COORDINATE", "EMAIL", "FILE_RESOURCE", "GEOJSON", "LETTER", "LONG_TEXT", "PHONE_NUMBER", "TEXT", "TRACKER_ASSOCIATE", "USERNAME"] and resource["aggregationType"] != "NONE":
+        if resource["valueType"] in ["TEXT", "LONG_TEXT", "LETTER", "PHONE_NUMBER", "EMAIL", "DATE", "DATETIME", "TIME", "TRACKER_ASSOCIATE", "USERNAME", "COORDINATE", "ORGANISATION_UNIT", "REFERENCE", "AGE", "URL", "FILE_RESOURCE", "IMAGE", "GEOJSON"] and resource["aggregationType"] != "NONE":
             message = f"The dataElement '{resource['name']}' ({resource['id']}) has an invalid 'value type - aggregation type relation'. ValueType={resource['valueType']}, AggregationType={resource['aggregationType']}. See {url_ui} or {url_api}"
             logger.error(message)
