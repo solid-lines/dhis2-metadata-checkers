@@ -3,6 +3,12 @@
 ## Requirements
 1. Python 3 (maybe 3.6+)
 
+## Getting Started
+
+To use these scripts, you will need to have `Python3` installed on your system, and also the Python dependencies listed in `requirements.txt`. In order to install the dependencies you should run:
+
+`pip install -r requirements.txt`
+
 
 ## Steps for all scripts
 
