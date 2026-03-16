@@ -28,4 +28,4 @@ if __name__ == "__main__":
         if flag_empty_dataDimensionItem:
             url_api = server_url+PARENT_RESOURCE+"/"+v["id"]
             message = f"Visualization '{v['name']}' ({v['id']}) has empty data dimensions (one or more). See {url_api}"
-            logger.warn(message)                
+            logger.warning(message)

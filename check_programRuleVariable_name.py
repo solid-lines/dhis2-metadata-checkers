@@ -39,7 +39,7 @@ if __name__ == "__main__":
             message = f"In Program '{resource['program']['name']}' ({resource['program']['id']}), the PRV {resource['name']} ({resource['id']}) contains 'and/or/not'. See {metadata_url}"
             logger.error(message)
 
-        if not bool(re.match("^[a-zA-Z\d_\-\.\ ]+$", resource["name"])):
+        if not bool(re.match(r"^[a-zA-Z\d_.\- ]+$", resource["name"])):
             metadata_url = server_url+RESOURCE_TYPE+"/"+resource["id"]
             message = f"In Program '{resource['program']['name']}' ({resource['program']['id']}), the PRV {resource['name']} ({resource['id']}) contains unexpected characters. See {metadata_url}"
             logger.error(message)
