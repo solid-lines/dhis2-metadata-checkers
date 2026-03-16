@@ -8,6 +8,24 @@ from requests.auth import HTTPBasicAuth
 import collections
 
 
+def _dhis_get(credentials, path, **kwargs):
+    server_url = credentials["server"]
+    username = credentials["user"]
+    password = credentials["password"]
+    url = f"{server_url}{path}"
+    logging.debug(url)
+    return requests.get(url, auth=HTTPBasicAuth(username, password), **kwargs)
+
+
+def _dhis_post(credentials, path, data=None, **kwargs):
+    server_url = credentials["server"]
+    username = credentials["user"]
+    password = credentials["password"]
+    url = f"{server_url}{path}"
+    logging.debug(url)
+    return requests.post(url, data=data, auth=HTTPBasicAuth(username, password), **kwargs)
+
+
 def get_resources_from_file(resource, filename):
     with open(filename, 'r') as f:
         metadata = json.load(f)
@@ -63,17 +81,13 @@ def get_logger(credentials, check_name):
     return logger
 
 def get_dhis2_version(credentials):
-    server_url = credentials["server"]
-    username = credentials["user"]
-    password = credentials["password"]
-        
-    url_resource = f"{server_url}system/info"
-    logging.debug(url_resource)
-    response = requests.get(url_resource, auth=HTTPBasicAuth(username, password))
+    path = "system/info"
+    response = _dhis_get(credentials, path)
     if response.ok:
         return response.json()["version"]
     else:
         # If response code is not ok (200), print the resulting http error code with description
+        url_resource = f"{credentials['server']}{path}"
         logging.error(f"Please, double check this call: {url_resource}")
         response.raise_for_status()
 
@@ -83,13 +97,8 @@ def validate_generic_expression(credentials, expression):
     '''
     Uses the generic /api/expressions/description?expression=<expression-string> for validation
     '''
-    server_url = credentials["server"]
-    username = credentials["user"]
-    password = credentials["password"]
-        
-    url_resource = f"{server_url}expressions/description?expression={requests.utils.quote(expression)}"
-    logging.debug(url_resource)
-    response = requests.get(url_resource, auth=HTTPBasicAuth(username, password))
+    path = f"expressions/description?expression={requests.utils.quote(expression)}"
+    response = _dhis_get(credentials, path)
     if response.ok:
         if response.json()["status"] == "ERROR":
             return response
@@ -97,19 +106,15 @@ def validate_generic_expression(credentials, expression):
             return None
     else:
         # If response code is not ok (200), print the resulting http error code with description
+        url_resource = f"{credentials['server']}{path}"
         logging.error(f"Please, double check this call: {url_resource}")
         response.raise_for_status()
 
     
 def validate_expression(credentials, resource_type, type_expression, expression):
-    server_url = credentials["server"]
-    username = credentials["user"]
-    password = credentials["password"]
-        
-    url_resource = f"{server_url}{resource_type}/{type_expression}/description"
-    logging.debug(url_resource)
-    headers = {"Content-Type":"text/plain"}
-    response = requests.post(url_resource, data=expression, auth=HTTPBasicAuth(username, password), headers=headers)
+    path = f"{resource_type}/{type_expression}/description"
+    headers = {"Content-Type": "text/plain"}
+    response = _dhis_post(credentials, path, data=expression, headers=headers)
     if response.ok:
         if response.json()["status"] == "ERROR":
             return response
@@ -117,19 +122,15 @@ def validate_expression(credentials, resource_type, type_expression, expression)
             return None
     else:
         # If response code is not ok (200), print the resulting http error code with description
+        url_resource = f"{credentials['server']}{path}"
         logging.error(f"Please, double check this call: {url_resource}")
         response.raise_for_status()
     
 
 def validate_pr_expression(credentials, resource_type, type_expression, program_id, expression):
-    server_url = credentials["server"]
-    username = credentials["user"]
-    password = credentials["password"]
     logging.debug(expression)
-        
-    url_resource = f"{server_url}{resource_type}/{type_expression}/description?programId={program_id}"
-    logging.debug(url_resource)
-    response = requests.post(url_resource, data=expression, auth=HTTPBasicAuth(username, password))
+    path = f"{resource_type}/{type_expression}/description?programId={program_id}"
+    response = _dhis_post(credentials, path, data=expression)
     if response.ok:
         if response.json()["status"] == "ERROR":
             return response
@@ -137,18 +138,14 @@ def validate_pr_expression(credentials, resource_type, type_expression, program_
             return None
     else:
         # If response code is not ok (200), print the resulting http error code with description
+        url_resource = f"{credentials['server']}{path}"
         logging.error(f"Please, double check this call: {url_resource} {expression}")
         #response.raise_for_status()
 
 
 def validate_pra_expression(credentials, resource_type, type_expression, program_id, expression):
-    server_url = credentials["server"]
-    username = credentials["user"]
-    password = credentials["password"]
-        
-    url_resource = f"{server_url}{resource_type}/{type_expression}/expression/description?programId={program_id}"
-    logging.debug(url_resource)
-    response = requests.post(url_resource, data=expression.encode('utf-8'), auth=HTTPBasicAuth(username, password))
+    path = f"{resource_type}/{type_expression}/expression/description?programId={program_id}"
+    response = _dhis_post(credentials, path, data=expression.encode("utf-8"))
     if response.ok:
         if response.json()["status"] == "ERROR":
             return response
@@ -158,6 +155,7 @@ def validate_pra_expression(credentials, resource_type, type_expression, program
         return response
     else:
         # If response code is not ok (200), print the resulting http error code with description
+        url_resource = f"{credentials['server']}{path}"
         logging.error(f"Please, double check this call: {url_resource}")
         #response.raise_for_status()
 
@@ -169,12 +167,7 @@ def checkIfDuplicates(listOfElems):
         return True
 
 def get_resources_from_online(credentials, resource_type, fields='*', param_filter=None):
-    
-    server_url = credentials["server"]
-    username = credentials["user"]
-    password = credentials["password"]
     pagesize = credentials["page_size"]
-        
     page = 0
     resources = {resource_type: []}
     resources_id = []
@@ -182,12 +175,11 @@ def get_resources_from_online(credentials, resource_type, fields='*', param_filt
     data_to_query = True
     while data_to_query:
         page += 1
-        url_resource = f"{server_url}{resource_type}?fields={fields}&pageSize={pagesize}&format=json&order=created:DESC,lastUpdated:DESC,name:ASC&skipMeta=true&format=json&page={page}"
+        path = f"{resource_type}?fields={fields}&pageSize={pagesize}&format=json&order=created:DESC,lastUpdated:DESC,name:ASC&skipMeta=true&format=json&page={page}"
         if param_filter:
-            url_resource = url_resource + "&" + param_filter
+            path = path + "&" + param_filter
 
-        logging.debug(url_resource)
-        response = requests.get(url_resource, auth=HTTPBasicAuth(username, password))
+        response = _dhis_get(credentials, path)
 
         if response.ok:
             resources[resource_type].extend(response.json()[resource_type])
@@ -203,6 +195,7 @@ def get_resources_from_online(credentials, resource_type, fields='*', param_filt
                 data_to_query = False
         else:
             # If response code is not ok (200), print the resulting http error code with description
+            url_resource = f"{credentials['server']}{path}"
             logging.error(f"Please, double check this call: {url_resource}. Response code: {response.status_code}. Response: {response.text}")
             response.raise_for_status()
 
@@ -210,22 +203,14 @@ def get_resources_from_online(credentials, resource_type, fields='*', param_filt
 
 
 def get_resource_from_online(credentials, resource_type, resource_uid, fields='*'):
-    server_url = credentials["server"]
-    username = credentials["user"]
-    password = credentials["password"]
-        
-    url_resource = server_url+resource_type+"/"+resource_uid+"?format=json&fields="+fields
-    logging.debug(url_resource)
-    response = requests.get(url_resource, auth=HTTPBasicAuth(username, password))
+    path = f"{resource_type}/{resource_uid}?format=json&fields={fields}"
+    response = _dhis_get(credentials, path)
     return response.json()
 
 
 def check_OK(credentials, url_resource_uid):
-    logging.debug(url_resource_uid) 
-    username = credentials["user"]
-    password = credentials["password"]
-
-    response = requests.get(url_resource_uid, auth=HTTPBasicAuth(username, password))
+    logging.debug(url_resource_uid)
+    response = requests.get(url_resource_uid, auth=HTTPBasicAuth(credentials["user"], credentials["password"]))
 
     if response.ok:
         return {"valid": True}
