@@ -257,7 +257,7 @@ def has_parenthesis_extra_space_double(input_text):
 
 import re
 def has_parenthesis_without_space(input_text):
-    if re.search("[a-zA-Z]\([^sSd]", input_text):
+    if re.search(r"[a-zA-Z]\(", input_text):
         return True
 
 

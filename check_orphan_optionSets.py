@@ -31,8 +31,8 @@ if __name__ == "__main__":
     optionset_not_used = [os for os in optionsets_uid if os not in teas_uid+des_uid+atts_uid]
     if optionset_not_used:
         message = f"{len(optionset_not_used)} optionSets are not used by any TEA/DE/attribute: ({optionset_not_used})"
-        logger.warn(message)
+        logger.warning(message)
 
         for os in optionset_not_used:
             message = f"The optionSet '{optionsets_dict[os]}' ({os}) is not used by any TEA/DE/attribute."
-            logger.warn(message)
+            logger.warning(message)
