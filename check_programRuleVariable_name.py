@@ -49,3 +49,10 @@ if __name__ == "__main__":
     for prv in prv_name_dup:
         message = f"In Program '{prv[0]}' ({prv[1]}), there are more than one PRV with the same name '{prv[2]}'."
         logger.error(message)
+    
+    all_prv_lc = [(a, b, c.lower().strip()) for (a, b, c) in all_prv]
+    prv_name_dup_lc = [k for k,count in Counter(all_prv_lc).items() if count > 1]
+    for prv in prv_name_dup_lc:
+        if prv[2] not in [x[2].lower().strip() for x in prv_name_dup]:
+            message = f"In Program '{prv[0]}' ({prv[1]}), there are more than one PRV with the same name (lowercased/trimmed) '{prv[2]}'."
+            logger.warning(message)
