@@ -46,7 +46,7 @@ def find_duplicates(resource_type, translation_property):
         for name in dhis2_resources[locale]:
             if len(dhis2_resources[locale][name]) > 1 and locale in locales_to_check:
                 message = f"{resource_type} - {translation_property} '{name}' is not unique for locale '{locale}'. Duplicates uids:{dhis2_resources[locale][name]}"
-                logger.error(message)
+                logger.warning(message)
     
 
 ################################################################################
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     ############################################################################    
 
     RESOURCES = ["attributes", "categories", "categoryCombos", "categoryOptionCombos", "categoryOptions", "dataElements", "indicatorTypes", "optionSets", "trackedEntityAttributes"]
-    TRANSLATION_PROPERTIES = ["NAME", "SHORT_NAME"]
+    TRANSLATION_PROPERTIES = ["NAME", "SHORT_NAME", "FORM_NAME"]
     for resource in RESOURCES:
         for translation_property in TRANSLATION_PROPERTIES: 
             find_duplicates(resource, translation_property)    
