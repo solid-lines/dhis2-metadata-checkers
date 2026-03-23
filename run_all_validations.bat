@@ -13,6 +13,7 @@ python check_expressions.py --credentials=%credentials%
 python check_link_programRuleAction_de.py --credentials=%credentials%
 python check_link_programRuleAction_hideoption.py --credentials=%credentials%
 python check_link_programRuleAction_hideoptiongroup.py --credentials=%credentials%
+python check_link_programRuleAction_optionSet.py --credentials=%credentials%
 python check_link_programRuleAction_tea.py --credentials=%credentials%
 python check_link_programRuleVariable_de.py --credentials=%credentials%
 python check_link_programRuleVariable_tea.py --credentials=%credentials%

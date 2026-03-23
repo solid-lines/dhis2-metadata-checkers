@@ -61,6 +61,9 @@ This script checks if the optionSet of the optiongroup to be hidden is the same 
 # check_link_programRuleAction_tea.py
 This script checks if the tracked entity attribute associated to a program rule action belongs to the program (or the tracked entity type) that the program rule is associated to.
 
+# check_link_programRuleAction_optionSet.py
+This script checks if the value assigned in an ASSIGN program rule action is a valid option code of the linked DE/TEA optionSet. Assignment to PRV is not supported yet.
+
 # check_link_programRuleVariable_de.py
 This script checks if the data element associated to a program rule variable exists and belongs to the program that the program rule is associated to.
 
